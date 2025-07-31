@@ -1,0 +1,67 @@
+<!-- Top Black Bar -->
+<div class="bg-black text-white py-2 px-3 position-relative text-center">
+  <span class="small d-block fw-light"
+    >Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
+    <strong>ShopNow</strong></span
+  >
+
+  <div class="dropdown position-absolute end-0 top-0 mt-1 me-3">
+    <a
+      class="text-white dropdown-toggle small text-decoration-none"
+      href="#"
+      role="button"
+      data-bs-toggle="dropdown"
+    >
+      English
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="#">English</a></li>
+      <li><a class="dropdown-item" href="#">Arabic</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Main Navbar -->
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">E-commerce</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="mainNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
+      </ul>
+
+      <form class="d-flex align-items-center gap-3" style="width: 25%">
+        <div class="input-group" style="flex: 1">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="What are you looking for?"
+            aria-label="Search"
+            style="font-size: 14px"
+          />
+          <button class="btn btn-outline-secondary border" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+
+        <a href="#" class="text-dark"><i class="bi bi-heart fs-5"></i></a>
+        <a href="#" class="text-dark"><i class="bi bi-cart fs-5"></i></a>
+      </form>
+    </div>
+  </div>
+</nav>
