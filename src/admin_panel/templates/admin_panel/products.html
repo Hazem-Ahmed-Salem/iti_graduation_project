@@ -1,0 +1,35 @@
+<!-- templates/products.html -->
+{% extends 'admin_panel/admin_base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<h1>Products</h1>
+
+<button class="add-product">+ Add Product</button>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white;">
+  <thead>
+    <tr style="background-color: #eee;">
+      <th style="padding: 10px;">Product Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- dummy data -->
+    <tr style="text-align: center;">
+      <td>Wireless Mouse</td>
+      <td>$15.99</td>
+      <td>120</td>
+      <td><span style="color: green;">Available</span></td>
+      <td>
+        <button>Edit</button>
+        <button>Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
