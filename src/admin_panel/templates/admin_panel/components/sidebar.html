@@ -1,70 +1,55 @@
 {% load static %}
+
 <div>
+  <div class="top">
+    <!-- <img src="{% static 'admin_panel/images/logo.png' %}"> -->
+    <h1><font color="orange">Souq</font><font color="red">ora</font></h1>
+  </div>
 
-        <div class="top">
-            
-                <!-- <img src="{% static 'admin_panel/images/logo.png' %}"> -->
-                <h1> <font color="orange">Souq</font><font color="red">ora</font></h1>
-        
-        </div>
-            
-        <div class="slidebar">
+  <div class="slidebar">
 
-            <div class="row">
-           
-            <a href="#">
+    <div class="row{% if request.resolver_match.url_name == 'dashboard' %}-active{% endif %}">
+      <a href="#">
+        <span class="material-symbols-outlined">grid_view</span>
+        <h3>Dashboard</h3>
+      </a>
+    </div>
 
-                
-                <span class="material-symbols-outlined">grid_view</span>
-                <h3>Dashboard</h3>
-            </a>
+    <div class="row{% if request.resolver_match.url_name == 'customers' %}-active{% endif %}">
+      <a href="{% url 'customers' %}">
+        <span class="material-symbols-outlined">person_outline</span>
+        <h3>Customers</h3>
+      </a>
+    </div>
 
-            </div>
+    <div class="row{% if request.resolver_match.url_name == 'products' %}-active{% endif %}">
+      <a href="{% url 'products' %}">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <h3>Products</h3>
+      </a>
+    </div>
 
-            <div class="row">
-            <a href="{% url 'customers'%}" class="active">
-                <span class="material-symbols-outlined">person_outline </span>
-                <h3>Customers</h3>
-             </a>
+    <div class="row{% if request.resolver_match.url_name == 'messages' %}-active{% endif %}">
+      <a href="#">
+        <span class="material-symbols-outlined">mail_outline</span>
+        <h3>Messages</h3>
+        <span class="msg_count">14</span>
+      </a>
+    </div>
 
-            </div>
+    <div class="row{% if request.resolver_match.url_name == 'orders' %}-active{% endif %}">
+      <a href="#">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <h3>Orders</h3>
+      </a>
+    </div>
 
-
-
-
-            <div  class="row">
-             <a href="#">
-                <span class="material-symbols-outlined">mail_outline </span>
-                <h3>Messages</h3>
-                <span class="msg_count">14</span>
-             </a>
-            </div>
-
-            <div class="row">
-             <a href="{% url 'products'%}">
-                <span class="material-symbols-outlined">receipt_long </span>
-                <h3>Products</h3>
-             </a>
-            </div>
-
-
-
-
-            <div   class="row">
-             <a href="#">
-                <span class="material-symbols-outlined">Orders </span>
-                <h3>Orders</h3>
-             </a>
-            </div>
-
-
-
-            <div  class="row">
-
-             <a href="#" class="logout">
-                <span class="material-symbols-outlined">logout </span>
-                <h3>logout</h3>
-             </a>
-            </div>
-        </div>
+    <div class="row">
+      <a href="#" class="logout">
+        <span class="material-symbols-outlined">logout</span>
+        <h3>Logout</h3>
+      </a>
+    </div>
+    
+  </div>
 </div>

@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Customer
 from .forms import CustomerForm 
+from products.models import Product,Category
 # from django.contrib.auth.decorators import login_required, user_passes_test
 
 # def is_admin(user):
@@ -33,4 +34,15 @@ def add_customer(request):
     return render(request, 'admin_panel/add_customer.html', {'form': form})
 
 def products_view(request):
-    return render(request,'admin_panel/products.html')
+    category_id = request.GET.get('category')
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+
+    categories = Category.objects.all()
+    return render(request, 'admin_panel/products.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': int(category_id) if category_id else None,
+    })
