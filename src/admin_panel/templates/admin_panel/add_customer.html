@@ -1,0 +1,14 @@
+{% extends 'admin_panel/admin_base.html' %}
+
+{% block title %}Add Customer{% endblock %}
+
+{% block content %}
+  <div class="page">
+    <h1>Add New Customer</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="add-product">Save</button>
+    </form>
+  </div>
+{% endblock %}
