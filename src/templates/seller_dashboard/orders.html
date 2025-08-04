@@ -1,0 +1,26 @@
+<h1>الطلبات على منتجاتي</h1>
+
+{% if order_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>المنتج</th>
+                <th>الكمية</th>
+                <th>السعر</th>
+                <th>تاريخ الطلب</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }} جنيه</td>
+                <td>{{ item.order.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>لا يوجد طلبات على منتجاتك حتى الآن.</p>
+{% endif %}
