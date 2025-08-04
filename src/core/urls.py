@@ -24,7 +24,11 @@ urlpatterns = [
     path('admin_panel/', include('admin_panel.urls')),
     path('user/',include('user.urls')),
     path('', include('products.urls')),
+    path('seller/', include('seller_dashboard.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

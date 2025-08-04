@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     'user',
     'admin_panel',
     'seller_dashboard',
+    'accounts',
+    'orders',
 ]
+
+# ✅ تعريف المستخدم المخصص
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,3 +139,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
