@@ -34,10 +34,13 @@ def home(request):
     })
 
 def product_list_view(request):
-    products = Product.objects.all()
-    return render(request, 'products/product_list.html', {
-        'products': products
-    })
+    query = request.GET.get('q')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
+    return render(request, 'products/product_list.html', {'products': products})
+
 
 def product_detail_view(request, pk):
     product = get_object_or_404(Product, pk=pk)

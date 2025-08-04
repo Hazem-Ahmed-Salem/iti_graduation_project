@@ -1,0 +1,17 @@
+<h1>منتجاتي</h1>
+
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.name }} - {{ product.price }} جنيه
+                [ <a href="{% url 'seller_dashboard:edit_product' product.pk %}">تعديل</a> ]
+                [ <a href="{% url 'seller_dashboard:delete_product' product.pk %}">حذف</a> ]
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>لم تقم بإضافة أي منتجات بعد.</p>
+{% endif %}
+
+<p><a href="{% url 'seller_dashboard:add_product' %}">➕ إضافة منتج جديد</a></p>
