@@ -7,79 +7,71 @@ from django.http import JsonResponse
 from django.db.models import Sum
 import datetime
 
-# حماية البائع
-def seller_required(view_func):
-    def _wrapped_view(request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.user_type == 'seller':
-            return view_func(request, *args, **kwargs)
-        return redirect('accounts:login')
-    return _wrapped_view
 
-@login_required
-@seller_required
+
+
+
 def dashboard_view(request):
-    total_products = Product.objects.filter(seller=request.user).count()
-    total_orders = OrderItem.objects.filter(product__seller=request.user).count()
-    total_sales = OrderItem.objects.filter(product__seller=request.user).aggregate(total=Sum('price'))['total'] or 0
-    context = {
-        'total_products': total_products,
-        'total_orders': total_orders,
-        'total_sales': total_sales
-    }
-    return render(request, 'seller_dashboard/dashboard.html', context)
+    # total_products = Product.objects.filter(seller=request.user).count()
+    # total_orders = OrderItem.objects.filter(product__seller=request.user).count()
+    # total_sales = OrderItem.objects.filter(product__seller=request.user).aggregate(total=Sum('price'))['total'] or 0
+    # context = {
+    #     'total_products': total_products,
+    #     'total_orders': total_orders,
+    #     'total_sales': total_sales
+    # }
+    return render(request, 'seller_dashboard/dashboard.html')
 
-@login_required
-@seller_required
+
+
 def my_products_view(request):
-    products = Product.objects.filter(seller=request.user)
-    return render(request, 'seller_dashboard/my_products.html', {'products': products})
+    # products = Product.objects.filter(seller=request.user)
+    return render(request, 'seller_dashboard/my_products.html')
 
-@login_required
-@seller_required
+
+
 def add_product_view(request):
-    form = ProductForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        product = form.save(commit=False)
-        product.seller = request.user
-        product.save()
-        return redirect('seller_dashboard:my_products')
-    return render(request, 'seller_dashboard/add_product.html', {'form': form})
+    # form = ProductForm(request.POST or None, request.FILES or None)
+    # if form.is_valid():
+    #     product = form.save(commit=False)
+    #     product.seller = request.user
+    #     product.save()
+    #     return redirect('seller_dashboard:my_products')
+    return render(request, 'seller_dashboard/add_product.html')
 
-@login_required
-@seller_required
+
 def edit_product_view(request, pk):
-    product = get_object_or_404(Product, pk=pk, seller=request.user)
-    form = ProductForm(request.POST or None, request.FILES or None, instance=product)
-    if form.is_valid():
-        form.save()
-        return redirect('seller_dashboard:my_products')
-    return render(request, 'seller_dashboard/edit_product.html', {'form': form})
+    # product = get_object_or_404(Product, pk=pk, seller=request.user)
+    # form = ProductForm(request.POST or None, request.FILES or None, instance=product)
+    # if form.is_valid():
+    #     form.save()
+    #     return redirect('seller_dashboard:my_products')
+    return render(request, 'seller_dashboard/edit_product.html')
 
-@login_required
-@seller_required
+
 def delete_product_view(request, pk):
-    product = get_object_or_404(Product, pk=pk, seller=request.user)
-    if request.method == 'POST':
-        product.delete()
-        return redirect('seller_dashboard:my_products')
-    return render(request, 'seller_dashboard/confirm_delete.html', {'product': product})
+    # product = get_object_or_404(Product, pk=pk, seller=request.user)
+    # if request.method == 'POST':
+    #     product.delete()
+    #     return redirect('seller_dashboard:my_products')
+    return render(request, 'seller_dashboard/confirm_delete.html')
 
-@login_required
-@seller_required
+
+
 def my_orders_view(request):
-    orders = OrderItem.objects.filter(product__seller=request.user)
-    return render(request, 'seller_dashboard/orders.html', {'orders': orders})
+    # orders = OrderItem.objects.filter(product__seller=request.user)
+    return render(request, 'seller_dashboard/orders.html')
 
-@login_required
-@seller_required
-def sales_stats_view(request):
-    today = datetime.date.today()
-    last_7_days = [today - datetime.timedelta(days=i) for i in range(7)]
-    data = []
-    for day in last_7_days[::-1]:
-        day_total = OrderItem.objects.filter(
-            product__seller=request.user,
-            created_at__date=day
-        ).aggregate(total=Sum('price'))['total'] or 0
-        data.append({'date': day.strftime('%Y-%m-%d'), 'sales': float(day_total)})
-    return JsonResponse(data, safe=False)
+
+
+# def sales_stats_view(request):
+    # today = datetime.date.today()
+    # last_7_days = [today - datetime.timedelta(days=i) for i in range(7)]
+    # data = []
+    # for day in last_7_days[::-1]:
+    #     day_total = OrderItem.objects.filter(
+    #         product__seller=request.user,
+    #         created_at__date=day
+    #     ).aggregate(total=Sum('price'))['total'] or 0
+    #     data.append({'date': day.strftime('%Y-%m-%d'), 'sales': float(day_total)})
+    # return JsonResponse(data, safe=False)

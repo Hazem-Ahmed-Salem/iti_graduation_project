@@ -41,12 +41,9 @@ INSTALLED_APPS = [
     'user',
     'admin_panel',
     'seller_dashboard',
-    'accounts',
     'orders',
 ]
 
-# ✅ تعريف المستخدم المخصص
-AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,3 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_URL = '/accounts/login/'  # دي موجودة افتراضيًا بس حطها للتأكيد
+LOGIN_REDIRECT_URL = '/'        # أو أي صفحة بعد تسجيل الدخول
+LOGIN_REDIRECT_URL = '/seller/'  # الصفحة اللي يروح لها بعد الدخول (غير حسب رغبتك)
