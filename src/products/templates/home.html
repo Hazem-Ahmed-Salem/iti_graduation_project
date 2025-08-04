@@ -1,7 +1,56 @@
 {% extends 'base.html' %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <h1>Welcome to the Shop</h1>
-  <p>Check out our featured products below</p>
+
+
+
+<div class="w-100 bg-secondary" style="height: 200px;"></div>
+
+<div class="container my-5">
+  <p class="text-danger fw-bold mb-1">Categories</p>
+  <h4 class="fw-bold mb-3">Browse By Category</h4>
+
+  <div class="d-flex flex-wrap gap-3">
+    {% for category in categories %}
+      <a href="{% url 'category_products' category.pk %}" class="text-decoration-none text-dark">
+        <div class="d-flex justify-content-center align-items-center border rounded px-4 py-3 bg-white"
+             style="width: 120px; height: 80px;">
+          <div class="fw-semibold text-center">{{ category.name }}</div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="container my-5">
+   <p class="text-danger fw-bold mb-1">Our Products</p>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+   <h2 class="fw-bold">Explore Our Products</h2>
+  </div>
+
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-3 mb-4">
+        <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
+          <div class="text-center">
+            <div class="bg-light p-2">
+              <img src="{{ product.image }}" alt="{{ product.name }}" class="simple-image">
+            </div>
+            <div class="mt-2">
+              <h6 class="fw-bold mb-1">{{ product.name }}</h6>
+              <p class="text-danger fw-semibold mb-0">${{ product.price }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="text-center mt-3">
+    <a href="{% url 'product_list' %}" class="my-btn">View All Products</a>
+  </div>
+</div>
+
 {% endblock %}
