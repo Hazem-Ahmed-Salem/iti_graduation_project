@@ -1,0 +1,115 @@
+/* the total container */
+.container {
+  display: grid;
+  grid-template-columns: 20rem auto 20rem;
+}
+
+/*   logo section  */
+.top {
+  display: flex;
+  width: 250px;
+  height: 100px;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+}
+
+/*   sections   */
+
+.slidebar {
+  margin-top: 30px;
+  background-color: rgb(255, 255, 255);
+  width: 250px;
+  height: 600px;
+  border-radius: 20px;
+}
+
+/*   row section  */
+
+.row {
+  width: 250px;
+  background-color: rgb(255, 255, 255);
+}
+
+.row:hover {
+  background-color: rgb(247, 174, 174);
+  color: rgb(225, 82, 43);
+
+  border-radius: 10px;
+}
+
+
+
+
+.row:hover a {
+  color: rgb(187, 22, 22);
+}
+
+
+
+body {
+  background-color: rgb(245, 242, 242);
+}
+
+/* Heading */
+
+h1 {
+  margin-top: 50px;
+  font-size: 40px;
+}
+
+h3 {
+  margin-top: 10px;
+  width: 100px;
+  height: 20px;
+  display: flex;
+}
+
+/* messages notification*/
+
+.msg_count {
+  background-color: red;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* logo image*/
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+/*  links */
+
+a {
+  align-items: center;
+  display: flex;
+  width: 230px;
+  height: 60px;
+  gap: 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  color: rgb(0, 0, 0);
+  margin-left: 20px;
+}
+
+/* icon */
+
+span {
+  width: 50px;
+  height: 20px;
+}
+
+/* last link */
+.logout {
+  margin-top: 150px;
+  text-decoration: none;
+  display: flex;
+  width: 230px;
+  height: 60px;
+  gap: 10px;
+  margin-left: 20px;
+}
