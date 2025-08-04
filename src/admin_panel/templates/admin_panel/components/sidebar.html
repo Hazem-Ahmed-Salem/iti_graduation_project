@@ -3,7 +3,7 @@
 <div>
   <div class="top">
     <!-- <img src="{% static 'admin_panel/images/logo.png' %}"> -->
-    <h1><font color="orange">Souq</font><font color="red">ora</font></h1>
+    <h1>Souqora</h1>
   </div>
 
   <div class="slidebar">
@@ -29,13 +29,6 @@
       </a>
     </div>
 
-    <div class="row{% if request.resolver_match.url_name == 'messages' %}-active{% endif %}">
-      <a href="#">
-        <span class="material-symbols-outlined">mail_outline</span>
-        <h3>Messages</h3>
-        <span class="msg_count">14</span>
-      </a>
-    </div>
 
     <div class="row{% if request.resolver_match.url_name == 'orders' %}-active{% endif %}">
       <a href="#">
