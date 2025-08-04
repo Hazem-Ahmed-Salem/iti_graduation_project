@@ -1,0 +1,9 @@
+<h1>تعديل المنتج</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">تحديث</button>
+</form>
+
+<p><a href="{% url 'seller_dashboard:my_products' %}">🔙 العودة إلى منتجاتي</a></p>

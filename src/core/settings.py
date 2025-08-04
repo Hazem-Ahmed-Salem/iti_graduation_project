@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'user',
     'admin_panel',
     'seller_dashboard',
+    'orders',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +134,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_URL = '/accounts/login/'  # دي موجودة افتراضيًا بس حطها للتأكيد
+LOGIN_REDIRECT_URL = '/'        # أو أي صفحة بعد تسجيل الدخول
+LOGIN_REDIRECT_URL = '/seller/'  # الصفحة اللي يروح لها بعد الدخول (غير حسب رغبتك)
