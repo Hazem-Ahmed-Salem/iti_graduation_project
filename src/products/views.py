@@ -28,27 +28,27 @@ def home(request):
     categories = Category.objects.all()
     featured_products = Product.objects.all()[:8]
  
-    return render(request, 'home.html', {
+    return render(request, 'products/home.html', {
         'categories': categories,
         'products': featured_products
     })
 
 def product_list_view(request):
     products = Product.objects.all()
-    return render(request, 'product_list.html', {
+    return render(request, 'products/product_list.html', {
         'products': products
     })
 
 def product_detail_view(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, 'product_detail.html', {
+    return render(request, 'products/product_detail.html', {
         'product': product
     })
 
 def category_products_view(request, pk):
     category = get_object_or_404(Category, pk=pk)
     products = Product.objects.filter(category=category)
-    return render(request, 'category_products.html', {
+    return render(request, 'products/category_products.html', {
         'category': category,
         'products': products
     })

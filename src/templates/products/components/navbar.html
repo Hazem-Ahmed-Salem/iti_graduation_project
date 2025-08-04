@@ -1,27 +1,4 @@
 
-<div class="bg-black text-white py-2 px-3 position-relative text-center">
-  <span class="small d-block fw-light"
-    >Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-    <strong>ShopNow</strong></span
-  >
-
-  <div class="dropdown position-absolute end-0 top-0 mt-1 me-3">
-    <a
-      class="text-white dropdown-toggle small text-decoration-none"
-      href="#"
-      role="button"
-      data-bs-toggle="dropdown"
-    >
-      English
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" href="#">English</a></li>
-      <li><a class="dropdown-item" href="#">Arabic</a></li>
-    </ul>
-  </div>
-</div>
-
-
 <nav class="navbar navbar-expand-lg bg-white border-bottom">
   <div class="container-fluid px-4">
     <a class="navbar-brand fw-bold fs-4" href="{% url 'home' %}">E-commerce</a>
@@ -40,9 +17,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'home' %}">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign Up</a></li>
+        {% endif %}
       </ul>
 
       <form class="d-flex align-items-center gap-3" style="width: 25%">
@@ -61,6 +41,9 @@
 
         <a href="#" class="text-dark"><i class="bi bi-heart fs-5"></i></a>
         <a href="#" class="text-dark"><i class="bi bi-cart fs-5"></i></a>
+        {% if user.is_authenticated %}
+        <a href="#" class="text-dark"><i class="bi bi-person-circle fs-5"></i></a>
+        {% endif %}
       </form>
     </div>
   </div>
