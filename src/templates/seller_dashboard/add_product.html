@@ -1,0 +1,9 @@
+<h1>إضافة منتج جديد</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">حفظ المنتج</button>
+</form>
+
+<p><a href="{% url 'seller_dashboard:my_products' %}">🔙 العودة إلى منتجاتي</a></p>

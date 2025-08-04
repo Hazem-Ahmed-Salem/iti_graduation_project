@@ -1,0 +1,9 @@
+<h1>حذف المنتج</h1>
+
+<p>هل أنت متأكد أنك تريد حذف المنتج: <strong>{{ product.name }}</strong>؟</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">نعم، احذف</button>
+    <a href="{% url 'seller_dashboard:my_products' %}">❌ إلغاء</a>
+</form>
