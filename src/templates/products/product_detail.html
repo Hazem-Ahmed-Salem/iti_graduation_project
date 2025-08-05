@@ -40,7 +40,8 @@
 
       <a href="{% url 'toggle_wishlist' product.id %}" 
         class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
-        <i class="bi bi-heart-fill text-danger"></i>
+        <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+
      </a>
 
      <a href="{% url 'product_list' %}" class="my-btn me-2">Back to products</a>
