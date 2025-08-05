@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+
+    <style>
+
+        
+    .body{
+        background: #000000;
+        
+        
+    }
+
+    p{
+
+        color: #f0f0f0;
+        font-size: 20px;
+        opacity: 0;
+    
+
+    }
+
+    img:hover{
+
+         opacity:0.5;
+
+
+
+          }
+
+    .div:hover p{
+
+        opacity: 1;
+       
+    }
+
+    video{
+    
+        width:1200px;
+        height: 500px;
+        zoom: 150%;
+    }
+
+    img{
+        width:300px;
+        height: 300px;
+        margin-left: 100px;
+    }
+
+
+    
+
+   
+   .Div{
+
+    display: flex;
+    flex-wrap: wrap;
+    
+   }
+
+   .div{
+
+    margin-left: 200px;
+    width: 500px;
+    height: 500px;
+    gap: 10px;
+    margin-top: 50px;
+
+   }
+
+
+  
+
+    </style>
+</head>
+<body class="body">
+    
+    <div class="Div">
+        {% for product in products %}
+
+    <div class="div">
+        <a href="#">
+
+          <img src="{{product.image}}" >
+        </a>
+          <p>{{product.name}}</p>
+          
+           
+        
+
+        </div>
+    
+        {% endfor %}
+
+    </div>
+    
+</body>
+</html>
