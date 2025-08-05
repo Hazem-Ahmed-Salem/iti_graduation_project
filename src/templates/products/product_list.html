@@ -3,13 +3,53 @@
 
 {% block content %}
 
+
 <div class="container my-5">
   <h2 class="mb-4">All Products</h2>
+
+  <form method="get" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <select name="category" class="form-select">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == selected_category %}selected{% endif %}>
+          {{ cat.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <input type="number" name="min_price" class="form-control" placeholder="Min Price"
+           value="{{ min_price }}">
+  </div>
+
+  <div class="col-md-2">
+    <input type="number" name="max_price" class="form-control" placeholder="Max Price"
+           value="{{ max_price }}">
+  </div>
+
+
+
+  <div class="col-md-1">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="in_stock" id="in_stock"
+             {% if in_stock %}checked{% endif %}>
+      <label class="form-check-label" for="in_stock">In stock</label>
+    </div>
+  </div>
+
+  <div class="col-md-1">
+    <button type="submit" class="my-btn">Filter</button>
+  </div>
+</form>
+
   <div class="row">
     {% for product in products %}
-      <div class="col-md-3 mb-4">
+      <div class="col-md-3 mb-4" >
         <div class="card border-0 shadow-sm h-100">
-         
+         <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
+
           <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
             <img src="{{ product.URL_image }}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
           </div>
@@ -18,9 +58,13 @@
           <div class="card-body text-center">
             <h6 class="fw-bold mb-2">{{ product.name }}</h6>
             <p class="text-dark fw-semibold mb-2">${{ product.price }} </p>
+         </a>
 
             
             <a href="{% url 'product_detail' product.pk %}" class="my-btn">View Details</a>
+            <a href="{% url 'toggle_wishlist' product.id %}" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
+                    <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+            </a>
           </div>
         </div>
       </div>
