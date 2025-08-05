@@ -30,8 +30,13 @@
         </div>
       {% endfor %}
     </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'product_list' %}" class="my-btn">Back to products</a>
+   </div>
+
   {% else %}
     <p>You have no items in your wishlist.</p>
   {% endif %}
+  
 </div>
 {% endblock %}
