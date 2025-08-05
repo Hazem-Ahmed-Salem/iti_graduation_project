@@ -2,6 +2,8 @@ from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponse    
 from .models import Product , Category
 import requests
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 # Create your views here.
 
 def insert_product(request):
@@ -54,3 +56,19 @@ def category_products_view(request, pk):
         'category': category,
         'products': products
     })
+
+@login_required
+def toggle_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.user in product.wishlist.all():
+        product.wishlist.remove(request.user)
+    else:
+        product.wishlist.add(request.user)
+
+    return redirect(request.META.get('HTTP_REFERER', 'product_list'))
+
+@login_required
+def wishlist_view(request):
+    products = request.user.wishlist_products.all()
+    return render(request, 'products/wishlist.html', {'products': products})
