@@ -36,7 +36,7 @@
         <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
           <div class="text-center">
             <div class="bg-light p-2">
-              <img src="{{ product.image }}" alt="{{ product.name }}" class="simple-image">
+              <img src="{{ product.URL_image }}" alt="{{ product.name }}" class="simple-image">
             </div>
             <div class="mt-2">
               <h6 class="fw-bold mb-1">{{ product.name }}</h6>

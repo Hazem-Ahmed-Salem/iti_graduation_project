@@ -14,9 +14,8 @@ def insert_product(request):
                 name=product['title'],
                 description=product['description'],
                 price=product['price'],
-                stock=product['stock'],
-                image=product['images'][0],
-                is_featured=product.get('isFeatured', False),
+                URL_image=product['images'][0],
+                is_featured=True,
                 
             )
     except Exception as e:

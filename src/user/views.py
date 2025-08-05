@@ -15,10 +15,6 @@ def register_view(request):
             return redirect('home')
         else:
             error_message = form.errors.as_text()
-            if 'password2' in form.errors:
-                error_message = "Passwords do not match."
-            elif 'email' in form.errors:
-                error_message = "Email is already in use or invalid."
             return render(request, 'user/register.html', {'form': RegisterationForm(), "errors": error_message})
     return render(request, 'user/register.html', {'form': RegisterationForm()})
 
