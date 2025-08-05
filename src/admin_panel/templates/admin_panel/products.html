@@ -1,35 +1,49 @@
-<!-- templates/products.html -->
-{% extends 'admin_panel/admin_base.html' %}
 
-{% block title %}Products{% endblock %}
+{% extends 'admin_panel/admin_base.html' %}
+{% block title %}products{% endblock %}
 
 {% block content %}
-<h1>Products</h1>
+<div class="categories-navbar">
+  <a href="{% url 'products' %}" class="category-link {% if not selected_category %}active{% endif %}">
+    <i class="fas fa-border-all icon"></i> All
+  </a>
+  {% for cat in categories %}
+    <a href="?category={{ cat.id }}" class="category-link {% if selected_category == cat.id %}active{% endif %}">
+      {% if cat.name|lower == 'beauty' %}
+        <i class="fas fa-magic icon"></i>
+      {% elif cat.name|lower == 'fragrances' %}
+        <i class="fas fa-spray-can icon"></i>
+      {% elif cat.name|lower == 'furniture' %}
+        <i class="fas fa-couch icon"></i>
+      {% elif cat.name|lower == 'groceries' %}
+        <i class="fas fa-shopping-basket icon"></i>
+      {% else %}
+        <i class="fas fa-tags icon"></i>
+      {% endif %}
+      {{ cat.name }}
+    </a>
+  {% endfor %}
+</div>
 
-<button class="add-product">+ Add Product</button>
-
-<table style="width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white;">
-  <thead>
-    <tr style="background-color: #eee;">
-      <th style="padding: 10px;">Product Name</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- dummy data -->
-    <tr style="text-align: center;">
-      <td>Wireless Mouse</td>
-      <td>$15.99</td>
-      <td>120</td>
-      <td><span style="color: green;">Available</span></td>
-      <!-- <td>
-        <button>Edit</button>
-        <button>Delete</button>
-      </td> -->
-    </tr>
-  </tbody>
-</table>
-{% endblock %}
+  <div class="products-container">
+    {% for product in products %}
+      <div class="product-card">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+        <div class="product-details">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description|truncatewords:8 }}</p>
+          <span class="price">${{ product.price }}</span>
+          {% if product.category %}
+            <div class="category">Category: {{ product.category.name }}</div>
+          {% endif %}
+          <div class="stock {% if product.stock == 0 %}out{% endif %}">
+            {% if product.stock > 0 %}In Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}
+          </div>
+          <a href="#" class="btn">Edit product</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>No products available.</p>
+    {% endfor %}
+  </div>
+{% endblock content %}

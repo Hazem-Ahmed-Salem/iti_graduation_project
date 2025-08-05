@@ -2,6 +2,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Customer
 from .forms import CustomerForm 
+from products.models import Product,Category
+from django.http import HttpResponse
+from django.shortcuts import render
+import os
+import importlib.util
+from django.conf import settings
+from django.core.paginator import Paginator
+
+from .models import order
 # from django.contrib.auth.decorators import login_required, user_passes_test
 
 # def is_admin(user):
@@ -33,24 +42,22 @@ def add_customer(request):
     return render(request, 'admin_panel/add_customer.html', {'form': form})
 
 def products_view(request):
+    category_id = request.GET.get('category')
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+
+    categories = Category.objects.all()
+    return render(request, 'admin_panel/products.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': int(category_id) if category_id else None,
+    })
     return render(request,'admin_panel/products.html')
 
 
 
-
-#%%
-
-
-
-# admin_panel/views.py
-
-from django.http import HttpResponse
-from django.shortcuts import render
-import os
-import importlib.util
-from django.conf import settings
-
-from .models import order
 
 def Dashboard(request):
     return render(request,"admin_panel_templates/dashboard.html")
@@ -111,7 +118,7 @@ def display_Makeup_products(request):
 
 
 
-from django.core.paginator import Paginator
+
 def Orders(request):
     Orders=order.objects.all()
 
@@ -145,3 +152,4 @@ def Done(request):
 
 
     return render(request,"admin_panel_templates/done orders.html",{"OrdersList":OrdersList})
+
