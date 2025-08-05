@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from products.models import Product
-from orders.models import OrderItem  # هنحتاج نجهزه
-from products.forms import ProductForm
-from django.http import JsonResponse
-from django.db.models import Sum
-import datetime
+# from django.contrib.auth.decorators import login_required
+# from products.models import Product
+# from orders.models import OrderItem  # هنحتاج نجهزه
+# from products.forms import ProductForm
+# from django.http import JsonResponse
+# from django.db.models import Sum
+# import datetime
 
 
 
