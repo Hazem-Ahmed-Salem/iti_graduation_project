@@ -105,3 +105,4 @@ def toggle_wishlist(request, product_id):
 def wishlist_view(request):
     products = request.user.wishlist_products.all()
     return render(request, 'products/wishlist.html', {'products': products})
+
