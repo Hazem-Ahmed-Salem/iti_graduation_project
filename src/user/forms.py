@@ -67,6 +67,7 @@ class LoginForm(forms.Form):
 
 
 class UserProfileForm(forms.ModelForm):
+    profile_picture = forms.ImageField(widget=forms.ClearableFileInput)
     class Meta:
         model = Profile
         fields = ['gender', 'phone_number', 'profile_picture']
@@ -74,7 +75,7 @@ class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['gender'].widget.attrs.update({'class': 'form-control'})
-        self.fields['phone_number'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control','type': 'tel'})
         self.fields['profile_picture'].widget.attrs.update({'class': 'form-control'})
 
     def save(self,user, commit=True):
