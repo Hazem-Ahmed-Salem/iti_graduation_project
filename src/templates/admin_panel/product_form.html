@@ -1,0 +1,15 @@
+{% extends 'admin_panel/admin_base.html' %}
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+<div class="add-product-form-container">
+  <h2>Add New Product</h2>
+<!-- templates/products/add_product.html -->
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ product_form.as_p }}
+  {{ stock_form.as_p }}
+  <button type="submit">Save Product</button>
+</form>
+</div>
+{% endblock %}

@@ -202,3 +202,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# remove these files
+/src/scripts/
+/src/media/
+/myenv/

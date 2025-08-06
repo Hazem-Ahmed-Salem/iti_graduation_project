@@ -411,4 +411,161 @@ form input, form select, form textarea {
   color:#2c7159a4;
   font-size: 16px;
 }
+.card-product-details {
+  max-width: 80%;
+  margin: 40px auto;
+  display: flex;
+
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card-product-details img {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+.card-product-details .info {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-product-details .info h3 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c7159a4;
+}
+
+.card-product-details .info p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.card-product-details .price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2c7159a4;
+}
+
+.card-product-details .category {
+  font-size: 15px;
+  color: #777;
+}
+
+.card-product-details .stock {
+  font-size: 15px;
+  font-weight: 500;
+  color: green;
+}
+
+.card-product-details .stock.out {
+  color: #c0392b;
+}
+
+.card-product-details .btn {
+  align-self: start;
+  background-color: #2c7159a4;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.card-product-details .btn:hover {
+  background-color: #3d6859a4;
+  transform: translateY(-2px);
+}
+
+/* ===== Buttons Styling ===== */
+/* تنسيق الزرين داخل actions */
+.actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  display: flex;
+}
+
+/* زر عام */
+.btn {
+  display: inline-flex;
+
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: none;
+}
+
+/* أيقونات */
+.btn i {
+  font-size: 18px;
+}
+
+
+.btn-edit,
+.btn-delete {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.btn-edit {
+  background-color: #5e9e8c;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #4b8977;
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background-color: #c0392b;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #a93226;
+  transform: translateY(-1px);
+}
+
+.btn i {
+  font-size: 16px;
+}
+
+.btn-edit:hover {
+  background-color: #3d6859a4;
+  transform: translateY(-1px);
+}
+
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* فورم الحذف يظهر كزر */
+.delete-form {
+  display: inline;
+  margin-top: 50px;
+}
+
+
 

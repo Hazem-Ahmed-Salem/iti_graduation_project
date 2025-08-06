@@ -1,0 +1,45 @@
+{% extends 'admin_panel/admin_base.html' %}
+
+{% block title %}Product details{% endblock %}
+
+{% block content %}
+  <div class="card-product-details">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <div class="info">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <span class="price">${{ product.price }}</span>
+
+        {% if product.category %}
+        <div class="category">Category: {{ product.category.name }}</div>
+        {% endif %}
+
+        {% with quantity=product.get_stock_quantity %}
+        <div class="stock {% if quantity == 0 %}out{% endif %}">
+            {% if quantity > 0 %}
+                In Stock ({{ quantity }})
+            {% else %}
+                Out of Stock
+            {% endif %}
+        </div>
+        {%endwith %}
+
+        <br>
+        <hr>
+        <div class="actions">
+        <a href="{% url 'edit_product' product.pk %}" class="btn btn-edit">
+            <i class="fas fa-pen"></i> Edit
+        </a>
+
+        <form action="{% url 'delete_product' product.pk %}" method="post" class="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?');">
+            <i class="fas fa-trash-alt"></i> Delete
+            </button>
+        </form>
+        </div>
+
+
+    </div>
+  </div>
+{% endblock %} 
