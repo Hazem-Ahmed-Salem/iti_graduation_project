@@ -1,14 +1,21 @@
 {% extends 'admin_panel/admin_base.html' %}
+{% load static %}
 
-{% block title %}Add Customer{% endblock %}
+{% block title %}
+  {% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}
+{% endblock %}
 
 {% block content %}
-  <div class="page">
-    <h1>Add New Customer</h1>
-    <form method="post">
+  <div class="form-container">
+    <h2>{% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}</h2>
+    
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="add-product">Save</button>
+
+      <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Update{% else %}Add{% endif %}
+      </button>
     </form>
   </div>
 {% endblock %}

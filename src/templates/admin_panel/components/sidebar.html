@@ -2,7 +2,7 @@
 
 <div>
   <div class="top">
-    <!-- <img src="{% static 'admin_panel/images/logo.png' %}"> -->
+    <img src="{% static 'admin_panel/images/logo.png' %}">
     <h1>Souqora</h1>
   </div>
 
@@ -38,7 +38,7 @@
     </div>
 
     <div class="row">
-      <a href="#" class="logout">
+      <a href="{% url 'logout' %}" class="logout">
         <span class="material-symbols-outlined">logout</span>
         <h3>Logout</h3>
       </a>

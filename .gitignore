@@ -206,3 +206,4 @@ __marimo__/
 # remove these files
 /src/scripts/
 /src/media/
+/myenv/
