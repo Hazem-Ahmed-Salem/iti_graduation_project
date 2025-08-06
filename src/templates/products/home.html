@@ -32,23 +32,33 @@
    <h2 class="fw-bold">Explore Our Products</h2>
   </div>
 
-  <div class="row">
+ <div class="row">
     {% for product in products %}
-      <div class="col-md-3 mb-4">
-        <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
-          <div class="text-center">
-            <div class="bg-light p-2">
-              <img src="{{ product.URL_image }}" alt="{{ product.name }}" class="simple-image">
-            </div>
-            <div class="mt-2">
-              <h6 class="fw-bold mb-1">{{ product.name }}</h6>
-              <p class="text-danger fw-semibold mb-0">${{ product.price }}</p>
-            </div>
+      <div class="col-md-3 mb-4" >
+        <div class="card border-0 shadow-sm h-100">
+         <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
+
+          <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
+            <img src="{{ product.URL_image }}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
           </div>
-        </a>
+
+         
+          <div class="card-body text-center">
+            <h6 class="fw-bold mb-2">{{ product.name }}</h6>
+            <p class="text-dark fw-semibold mb-2">${{ product.price }} </p>
+         </a>
+
+            
+            <a href="#" class="my-btn">Add to Cart</a>
+            <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
+                    <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+            </a>
+          </div>
+        </div>
       </div>
     {% endfor %}
   </div>
+
 
   <div class="text-center mt-3">
     <a href="{% url 'product_list' %}" class="my-btn">View All Products</a>
