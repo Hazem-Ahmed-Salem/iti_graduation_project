@@ -62,7 +62,7 @@
          </a>
 
             
-            <a href="{% url 'product_detail' product.pk %}" class="my-btn">View Details</a>
+            <a href="#" class="my-btn">Add to Cart</a>
             <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
                     <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
             </a>
