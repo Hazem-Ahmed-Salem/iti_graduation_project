@@ -4,7 +4,7 @@ from .models import Product , Category
 import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.db.models import Q, Sum
+
 # Create your views here.
 
 def insert_product(request):
