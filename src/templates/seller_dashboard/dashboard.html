@@ -1,5 +1,28 @@
-<h1>لوحة تحكم البائع</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block navbar %}
 
-<p>عدد المنتجات: {{ total_products }}</p>
-<p>عدد الطلبات: {{ total_orders }}</p>
-<p>إجمالي المبيعات: {{ total_sales }} جنيه</p>
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Seller Control Panel{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'seller_dashboard/css/dashboard.css' %}">
+    </head>
+    <body>
+        
+    <div class="dashboard-container">
+        <h1>Seller Control Panel</h1>
+
+        <div class="stats">
+            <p class="stat-item">Total Products: <span>{{ total_products }}</span></p>
+            <p class="stat-item">Total Orders: <span>{{ total_orders }}</span></p>
+            <p class="stat-item">Total Sales: <span>{{ total_sales }} E.P</span></p>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}
