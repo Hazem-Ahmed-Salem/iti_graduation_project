@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'user/css/profile.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container profile-container">
+    <div class="row">
+        <!-- Left Side Navigation -->
+        <div class="col-md-4 col-lg-3 " style="margin-bottom: 400px;">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <img src="{{ user.profile.profile_picture.url }}" 
+                         class="rounded-circle mb-3" 
+                         alt="Profile Picture" 
+                         width="120" 
+                         height="120"
+                         onerror="this.onerror=null;this.src='https://placehold.co/120x120/EFEFEF/333?text=User';">
+                    <h5 class="card-title fw-bold">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <p class="text-muted">{{ user.username }}</p>
+                </div>
+                <div class="list-group list-group-flush nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="list-group-item list-group-item-action profile-nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">
+                        <i class="bi bi-person-fill me-2"></i>Profile Settings
+                    </a>
+                    <a class="list-group-item list-group-item-action profile-nav-link" id="v-pills-addresses-tab" data-bs-toggle="pill" href="#v-pills-addresses" role="tab" aria-controls="v-pills-addresses" aria-selected="false">
+                        <i class="bi bi-geo-alt-fill me-2"></i>Manage Addresses
+                    </a>
+                    <a class="list-group-item list-group-item-action text-danger" href="{% url 'logout' %}">
+                        <i class="bi bi-box-arrow-left me-2"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side Content -->
+        <div class="col-md-8 col-lg-9" >
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <!-- Profile Settings Tab -->
+                        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            <h4 class="fw-bold mb-4">Profile Information</h4>
+                            <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="user_role" class="form-label">User Role</label>
+                                        <select class="form-select" id="user_role" name="user_role">
+                                            {% if user.is_superuser %}
+                                            <option value="admin" selected>Admin</option>
+                                            {% endif %}
+                                            <option value="customer" {% if user.user_role == 'customer' %}selected{% endif %}>Customer</option>
+                                            <option value="seller" {% if user.user_role == 'seller' %}selected{% endif %}>Seller</option>
+                                        </select>
+                                        <!-- the button to change the onclick -->
+                                        <button id="change-user-type-btn"  type="submit" name="request_role_change" class="my-btn mt-2">Request Change</button>
+                                        <div class="form-text">changing your role may take some time until the admin approve your request</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last_name" class="form-label">Gender</label>
+                                        <select class="form-select" id="gender" name="gender">
+                                            <option value="male" {% if user.profile.gender == "male" %}selected{% endif %}>Male</option>
+                                            <option value="female" {% if user.profile.gender == "female" %}selected{% endif %}>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="last_name" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ user.profile.phone_number }}" pattern="[0-9]{10,15}" placeholder="Enter phone number">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="profile_pic" class="form-label">Profile Picture</label>
+                                        <div class="d-flex align-items-center">
+                                            <img id="profile-pic-preview" src="{{ user.profile.profile_picture.url }}" alt="Profile Picture Preview" class="rounded-circle me-3" width="80" height="80"
+                                                style="object-fit: cover; cursor: pointer;">
+                                            <input class="form-control d-none" type="file" id="profile_pic" name="profile_picture" accept="image/*">
+                                            <button type="button" class="my-btn ms-2" onclick="document.getElementById('profile_pic').click();">Change</button>
+                                            </div>
+                                            <script>
+                                            
+                                            </script>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <button type="submit" class="my-btn">Save Changes</button>
+                            </form>
+                        </div>
+                        <!-- Manage Addresses Tab -->
+                        <div class="tab-pane fade" id="v-pills-addresses" role="tabpanel" aria-labelledby="v-pills-addresses-tab">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="fw-bold m-0">Shipping Addresses</h4>
+                                <a href="{% url 'add_address' %}"><button class="my-btn">Add New Address</button></a>
+                            </div>
+
+                            {% if addresses %}
+                                <div class="row g-3">
+                                    {% for address in addresses %}
+                                    <div class="col-md-6">
+                                        <div class="card address-card h-100">
+                                            <div class="card-body">
+                                                <p>
+                                                    <strong>Type:</strong> {{ address.address_type|title }}
+                                                    <br>
+                                                    <strong>Address:</strong> {{ address.address|title }}
+                                                    <br>
+                                                    <strong>Apartment:</strong> {{ address.apartment|title }}
+                                                    <br>
+                                                    <strong>City:</strong> {{ address.city|title }}
+                                                    <br>
+                                                    <strong>Governorate:</strong> {{ address.governorate|title }}
+                                                    <br>
+                                                </p>
+                                                <p hidden id="address-id">{{address.id}}</p>
+                                                <a href="{% url 'edit_address' address.id %}" class="btn btn-sm btn-outline-success" >Edit</a>
+                                                <a href="" class="btn btn-sm btn-outline-danger">Remove</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>You have no saved addresses.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'user/js/profile.js' %}" defer></script>
+{% endblock %}
+
+
+
+

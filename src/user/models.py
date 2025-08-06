@@ -16,6 +16,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, first_name,last_name, email,user_role, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        user_role = 'admin'
         return self.create_user(first_name,last_name,email,user_role, password, **extra_fields)
 
 
@@ -61,7 +62,6 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     gender = models.CharField(max_length=10,choices=[('male','Male'),('female','Female')],default='male')
     phone_number = models.CharField(max_length=10)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,default=None,null=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', default='default_profile.png')
 
     def __str__(self):

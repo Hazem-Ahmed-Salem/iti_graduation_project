@@ -19,6 +19,7 @@
 
   
   {% include 'products/components/footer.html' %}
+{% block style %}
   <style>
   .my-btn {
   display: inline-block;
@@ -41,8 +42,12 @@
     max-height: 200px;
     object-fit: contain;
   }
+  
 
 
 </style>
+{% endblock %}
 </body>
+{% block scripts %}
+{% endblock %}
 </html>
