@@ -25,15 +25,21 @@ class UserRegistrationForm(forms.ModelForm):
             user.save()
         return user
 
-    
+
+from .models import User
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'category', 'description', 'price', 'image', 'is_featured']
+        fields = ['seller', 'name', 'category', 'description', 'price', 'image', 'is_featured']
         widgets = {
-            'description': forms.Textarea(),
+            'description': forms.Textarea(attrs={'rows': 3}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['seller'].queryset = User.objects.filter(user_role='seller')
+
 
 class StockForm(forms.ModelForm):
     class Meta:
