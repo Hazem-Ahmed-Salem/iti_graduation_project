@@ -38,7 +38,7 @@ def login_view(request):
             if user and user.check_password(password):
                 login(request, user)
                 if user.user_role == 'admin':
-                    return redirect('customers')
+                    return redirect('users')
                 elif user.user_role == 'seller':
                     return redirect('dashboard')
                 else:

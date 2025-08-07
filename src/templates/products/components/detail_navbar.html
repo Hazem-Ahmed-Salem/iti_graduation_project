@@ -27,7 +27,7 @@
         {% if user.is_authenticated %}
           {% if user.is_superuser and user.user_role == 'admin' %}
         <li class="nav-item">
-          <a class="nav-link text-color" href="{% url 'customers' %}">Admin Pannel</a>
+          <a class="nav-link text-color" href="{% url 'users' %}">Admin Pannel</a>
         </li>
           {% elif user.user_role == 'seller' %}
           <li class="nav-item">
