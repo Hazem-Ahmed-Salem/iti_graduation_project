@@ -1,22 +1,30 @@
 from django import forms
-from django.contrib.auth import get_user_model
-
 from products.models import Product, Stock
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from user.models import CustomUser
 
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
 
-User = get_user_model()
-
-class CustomerForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name'] 
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'user_role', 'password']
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match")
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.user_role = 'customer' 
+        user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
         return user
+
     
 
 class ProductForm(forms.ModelForm):
