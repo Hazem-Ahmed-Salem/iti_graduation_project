@@ -10,13 +10,17 @@ from django.core.paginator import Paginator
 from .forms import UserRegistrationForm , ProductForm,StockForm
 from .models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from user.utils import admin_required
 
-    
+
+   
+@admin_required
 def users_view(request):
     users = User.objects.all()
     return render(request, 'admin_panel/users.html', {'users': users})
 
-
+@admin_required
 def delete_user(request, user_id):
     users = User.objects.all()
     user_obj = get_object_or_404(users, id=user_id)
@@ -24,7 +28,7 @@ def delete_user(request, user_id):
     return redirect('users')
 
 
-
+@admin_required
 def add_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -36,6 +40,7 @@ def add_user(request):
 
     return render(request, 'admin_panel/add_user.html', {'form': form})
 
+@admin_required
 def products_view(request):
     category_id = request.GET.get('category')
     if category_id:
@@ -50,11 +55,14 @@ def products_view(request):
         'selected_category': int(category_id) if category_id else None,
     })
 
+@admin_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'admin_panel/product_info.html', {
         'product': product
     })
+
+@admin_required
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -62,6 +70,7 @@ def delete_product(request, pk):
         messages.success(request, 'Product deleted successfully.')
         return redirect('products')
 
+@admin_required
 def add_product(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
@@ -85,6 +94,8 @@ def add_product(request):
         product_form = ProductForm()
         stock_form = StockForm()
     return render(request, 'admin_panel/product_form.html', {'product_form': product_form, 'stock_form': stock_form})
+
+@admin_required
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     stock = get_object_or_404(Stock, product=product)

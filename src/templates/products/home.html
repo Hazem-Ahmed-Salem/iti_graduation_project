@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
@@ -64,5 +65,10 @@
     <a href="{% url 'product_list' %}" class="my-btn">View All Products</a>
   </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'products/js/product_list.js' %}" defer></script>
 
 {% endblock %}
