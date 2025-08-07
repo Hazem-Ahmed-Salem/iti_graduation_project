@@ -5,8 +5,6 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    direction: rtl;
-    text-align: right;
 }
 
 .orders-table {
@@ -24,7 +22,7 @@
 }
 
 .orders-table th {
-    background-color: #007bff;
+    background-color: #074932;
     color: white;
     font-weight: bold;
 }

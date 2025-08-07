@@ -42,7 +42,7 @@
 }
 
 .submit-button {
-    background-color: #007bff;
+    background-color: #074932;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -53,7 +53,7 @@
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+    background-color: #074932;
 }
 
 .back-link {

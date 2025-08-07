@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.db.models import Sum
 import datetime
 from products.models import Product
-from orders.models import Sale  # هنحتاج نجهزه
+from orders.models import Sale  
 from .forms import ProductForm
 from django.http import JsonResponse
 from django.db.models import Sum
