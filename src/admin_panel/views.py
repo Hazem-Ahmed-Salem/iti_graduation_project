@@ -10,20 +10,30 @@ from django.core.paginator import Paginator
 from .forms import CustomerForm , ProductForm,StockForm
 from .models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from user.views import admin_required
 
-customers = User.objects.filter(user_role='customer')
+
+
+
+
+
+
     
+@admin_required
 def customers_view(request):
+    customers = User.objects.filter(user_role='customer')
     return render(request, 'admin_panel/customers.html', {'customers': customers})
 
-
+@admin_required
 def delete_customer(request, customer_id):
+    customers = User.objects.filter(user_role='customer')
     customer_obj = get_object_or_404(customers, id=customer_id)
     customer_obj.delete()
     return redirect('customers')
 
 
-
+@admin_required
 def add_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -35,6 +45,7 @@ def add_customer(request):
 
     return render(request, 'admin_panel/add_customer.html', {'form': form})
 
+@admin_required
 def products_view(request):
     category_id = request.GET.get('category')
     if category_id:
@@ -49,11 +60,14 @@ def products_view(request):
         'selected_category': int(category_id) if category_id else None,
     })
 
+@admin_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'admin_panel/product_info.html', {
         'product': product
     })
+
+@admin_required
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -61,6 +75,7 @@ def delete_product(request, pk):
         messages.success(request, 'Product deleted successfully.')
         return redirect('products')
 
+@admin_required
 def add_product(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
@@ -78,7 +93,7 @@ def add_product(request):
         stock_form = StockForm()
     return render(request, 'admin_panel/product_form.html', {'product_form': product_form, 'stock_form': stock_form})
 
-
+@admin_required
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     stock = get_object_or_404(Stock, product=product)

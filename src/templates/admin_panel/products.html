@@ -37,7 +37,7 @@
 <div class="products-container">
   {% for product in products %}
     <div class="product-card">
-      <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}">
       <div class="product-details">
         <h3>{{ product.name }}</h3>
         <p>{{ product.description|truncatewords:8 }}</p>
