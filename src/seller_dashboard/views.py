@@ -6,7 +6,6 @@ from products.models import Product
 from orders.models import Sale  
 from .forms import AddProductForm, EditProductForm
 from django.http import JsonResponse
-from django.db.models import Sum
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone

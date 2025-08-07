@@ -51,6 +51,7 @@
 }
 
 .back-link a{
+    text-decoration: none;
     margin-top: 20px;
     display: block;
     font-weight: bold;
