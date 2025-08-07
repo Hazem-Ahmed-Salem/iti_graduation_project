@@ -11,7 +11,10 @@ from rest_framework.response import Response
 
 User = get_user_model()
 
+
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     if request.method == 'POST':
         form = RegisterationForm(request.POST)
         if form.is_valid():
@@ -24,6 +27,8 @@ def register_view(request):
     return render(request, 'user/register.html', {'form': RegisterationForm()})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -32,7 +37,12 @@ def login_view(request):
             user = User.objects.filter(email=email).first()
             if user and user.check_password(password):
                 login(request, user)
-                return redirect('home')
+                if user.user_role == 'admin':
+                    return redirect('customers')
+                elif user.user_role == 'seller':
+                    return redirect('dashboard')
+                else:
+                    return redirect('home')
             else:
                 return render(request, 'user/login.html', {'form': form, 'errors': 'Invalid credentials'})
     else:

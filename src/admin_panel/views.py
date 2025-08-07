@@ -7,34 +7,40 @@ import os
 import importlib.util
 from django.conf import settings
 from django.core.paginator import Paginator
-from .forms import CustomerForm , ProductForm,StockForm
+from .forms import UserRegistrationForm , ProductForm,StockForm
 from .models import User
 from django.contrib import messages
-
-customers = User.objects.filter(user_role='customer')
-    
-def customers_view(request):
-    return render(request, 'admin_panel/customers.html', {'customers': customers})
+from django.contrib.auth.decorators import login_required
+from user.utils import admin_required
 
 
-def delete_customer(request, customer_id):
-    customer_obj = get_object_or_404(customers, id=customer_id)
-    customer_obj.delete()
-    return redirect('customers')
+   
+@admin_required
+def users_view(request):
+    users = User.objects.all()
+    return render(request, 'admin_panel/users.html', {'users': users})
+
+@admin_required
+def delete_user(request, user_id):
+    users = User.objects.all()
+    user_obj = get_object_or_404(users, id=user_id)
+    user_obj.delete()
+    return redirect('users')
 
 
-
-def add_customer(request):
+@admin_required
+def add_user(request):
     if request.method == 'POST':
-        form = CustomerForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('customers')
+            return redirect('users')
     else:
-        form = CustomerForm()
+        form = UserRegistrationForm()
 
-    return render(request, 'admin_panel/add_customer.html', {'form': form})
+    return render(request, 'admin_panel/add_user.html', {'form': form})
 
+@admin_required
 def products_view(request):
     category_id = request.GET.get('category')
     if category_id:
@@ -49,11 +55,14 @@ def products_view(request):
         'selected_category': int(category_id) if category_id else None,
     })
 
+@admin_required
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'admin_panel/product_info.html', {
         'product': product
     })
+
+@admin_required
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -61,6 +70,7 @@ def delete_product(request, pk):
         messages.success(request, 'Product deleted successfully.')
         return redirect('products')
 
+@admin_required
 def add_product(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
@@ -68,17 +78,24 @@ def add_product(request):
         if product_form.is_valid() and stock_form.is_valid():
             product = product_form.save(commit=False)
             stock = stock_form.save(commit=False)
-            product.seller = User.objects.first()
-            stock.product = product
+
+            product.seller = User.objects.filter(user_role='seller').first()
             product.save()
+
+            if product.image:
+                product.URL_image = product.image.url
+                product.save()
+
+            stock.product = product
             stock.save()
+
             return redirect('products')
     else:
         product_form = ProductForm()
         stock_form = StockForm()
     return render(request, 'admin_panel/product_form.html', {'product_form': product_form, 'stock_form': stock_form})
 
-
+@admin_required
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     stock = get_object_or_404(Stock, product=product)
@@ -87,8 +104,13 @@ def edit_product(request, pk):
         product_form = ProductForm(request.POST, request.FILES, instance=product)
         stock_form = StockForm(request.POST, instance=stock)
         if product_form.is_valid() and stock_form.is_valid():
-            product_form.save()
+            product = product_form.save()
             stock_form.save()
+
+            if product.image:
+                product.URL_image = product.image.url
+                product.save()
+
             return redirect('product_info', pk=product.pk)
     else:
         product_form = ProductForm(instance=product)

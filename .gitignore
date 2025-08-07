@@ -204,6 +204,6 @@ __marimo__/
 .streamlit/secrets.toml
 
 # remove these files
-/src/scripts/
+/static/dataset/
 /src/media/
 /myenv/

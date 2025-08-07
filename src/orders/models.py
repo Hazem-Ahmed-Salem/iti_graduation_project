@@ -29,10 +29,8 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE,null=True,default=None)
     payment_method = models.CharField(max_length=255,choices=payment_options,default='cash_on_delivery')
 
-    def order_total(self):
-        return float(self.order_price + self.order_vat())
     def __str__(self):
-        return f"{self.customer}"
+        return f"{self.buyer}"
 
 class Sale(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
