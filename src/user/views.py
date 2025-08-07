@@ -21,7 +21,7 @@ def admin_required(view_func):
             messages.warning(request, "You need to be logged in to view this page.")
             return redirect('login')
         
-        if getattr(request.user, 'user_role', None) == 'admin':
+        if getattr(request.user, 'user_role', None) == 'admin' and getattr(request.user, 'is_superuser', None) == True:
             return view_func(request, *args, **kwargs)
         else:
             messages.error(request, "You do not have permission to access this page.")
