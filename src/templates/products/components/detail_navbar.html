@@ -31,7 +31,7 @@
         </li>
           {% elif user.user_role == 'seller' %}
           <li class="nav-item">
-            <a class="nav-link text-color" href="#">Seller Pannel</a>
+            <a class="nav-link text-color" href="{% url 'seller_dashboard:dashboard' %}">Seller Pannel</a>
           </li>
           {% endif %}
           <li class="nav-item">
