@@ -52,7 +52,12 @@
     margin-top: 20px;
 }
 
-.add-link {
+.add-link a{
     margin-top: 20px;
     font-weight: bold;
+    color: #2c7159a4;
+}
+
+.add-link a :hover{
+    color: #074932;
 }
