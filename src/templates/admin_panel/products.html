@@ -1,49 +1,61 @@
-
 {% extends 'admin_panel/admin_base.html' %}
 {% block title %}products{% endblock %}
 
 {% block content %}
+    <h1>Products</h1>
+    <hr>
+    <br>
+
+
+<!-- Category Navbar -->
 <div class="categories-navbar">
   <a href="{% url 'products' %}" class="category-link {% if not selected_category %}active{% endif %}">
     <i class="fas fa-border-all icon"></i> All
   </a>
+
   {% for cat in categories %}
     <a href="?category={{ cat.id }}" class="category-link {% if selected_category == cat.id %}active{% endif %}">
-      {% if cat.name|lower == 'beauty' %}
-        <i class="fas fa-magic icon"></i>
-      {% elif cat.name|lower == 'fragrances' %}
-        <i class="fas fa-spray-can icon"></i>
-      {% elif cat.name|lower == 'furniture' %}
-        <i class="fas fa-couch icon"></i>
-      {% elif cat.name|lower == 'groceries' %}
-        <i class="fas fa-shopping-basket icon"></i>
-      {% else %}
-        <i class="fas fa-tags icon"></i>
-      {% endif %}
-      {{ cat.name }}
+      {% with cat.name|lower as cname %}
+        {% if 'beauty' in cname %}
+          <i class="fas fa-magic icon"></i>
+        {% elif 'electronic' in cname %}
+          <i class="fas fa-plug icon"></i>
+        {% elif 'kitchen' in cname %}
+          <i class="fas fa-utensils icon"></i>
+        {% elif 'makeup' in cname %}
+          <i class="fas fa-paint-brush icon"></i>
+        {% else %}
+          <i class="fas fa-tags icon"></i>
+        {% endif %}
+      {% endwith %}
+      {% with cat.name|title as cat_title %}
+      {{ cat_title|cut:"_" }}
+      {% endwith %}
+
     </a>
   {% endfor %}
 </div>
 
-  <div class="products-container">
-    {% for product in products %}
-      <div class="product-card">
-        <img src="{{ product.image }}" alt="{{ product.name }}">
-        <div class="product-details">
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.description|truncatewords:8 }}</p>
-          <span class="price">${{ product.price }}</span>
-          {% if product.category %}
-            <div class="category">Category: {{ product.category.name }}</div>
-          {% endif %}
-          <div class="stock {% if product.stock == 0 %}out{% endif %}">
-            {% if product.stock > 0 %}In Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}
-          </div>
-          <a href="#" class="btn">Edit product</a>
-        </div>
+<div class="d-flex justify-content-end me-3 mb-3">
+  <a href="{% url 'add_product' %}" class="add-product-btn" title="Add Product">
+    <i class="fas fa-plus"></i> Add New Product
+  </a>
+</div>
+
+<!-- Products Grid -->
+<div class="products-container">
+  {% for product in products %}
+    <div class="product-card">
+      <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}">
+      <div class="product-details">
+        <h3>{{ product.name }}</h3>
+        <span class="price">${{ product.price }}</span>
+        <a href="{% url 'product_info' product.pk %}" class="btn">View Details</a>
       </div>
-    {% empty %}
-      <p>No products available.</p>
-    {% endfor %}
-  </div>
+    </div>
+  {% empty %}
+    <h1><font color="black">No products available!</font></h1>
+  {% endfor %}
+</div>
+
 {% endblock content %}

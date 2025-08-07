@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
+from .models import Profile,Address
 
 
 User = get_user_model()
@@ -62,3 +63,60 @@ class LoginForm(forms.Form):
         self.fields['email'].label = "Email"
         self.fields['password'].label = "Password"
         self.fields['email'].widget.attrs['autofocus'] = True
+
+
+
+class UserProfileForm(forms.ModelForm):
+    profile_picture = forms.ImageField(widget=forms.ClearableFileInput)
+    class Meta:
+        model = Profile
+        fields = ['gender', 'phone_number', 'profile_picture']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['gender'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control','type': 'tel'})
+        self.fields['profile_picture'].widget.attrs.update({'class': 'form-control'})
+
+    def save(self,user, commit=True):
+        profile = super().save(commit=False)
+        profile.user = user
+        profile.profile_picture = self.cleaned_data['profile_picture']
+        profile.gender = self.cleaned_data['gender']
+        profile.phone_number = self.cleaned_data['phone_number']
+
+        if commit:
+            profile.save()
+        return profile
+    
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['address_type', 'address', 'apartment', 'city', 'governorate']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['address_type'].widget.attrs.update({'class': 'form-control'})
+        self.fields['address'].widget.attrs.update({'class': 'form-control'})
+        self.fields['apartment'].widget.attrs.update({'class': 'form-control'})
+        self.fields['city'].widget.attrs.update({'class': 'form-control'})
+        self.fields['governorate'].widget.attrs.update({'class': 'form-control'})
+        self.fields['address_type'].choices = [('home', 'Home'), ('work', 'Work'), ('other', 'Other')]
+        self.fields['address_type'].label = "Address Type"
+        self.fields['address'].label = "Address"
+        self.fields['apartment'].label = "Apartment"
+        self.fields['city'].label = "City"
+        self.fields['governorate'].label = "Governorate"
+
+    def save(self,user, commit=True):
+        address = super().save(commit=False)
+        address.user = user
+        address.address_type = self.cleaned_data['address_type']
+        address.address = self.cleaned_data['address']
+        address.apartment = self.cleaned_data['apartment']
+        address.city = self.cleaned_data['city']
+        address.governorate = self.cleaned_data['governorate']
+        if commit:
+            address.save()
+        return address
+    
+    

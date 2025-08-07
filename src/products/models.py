@@ -18,6 +18,7 @@ category_options=[
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True,null=True)
     image = models.ImageField(upload_to='categories/',null=True, blank=True)
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,7 +33,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE,default=None,null=True)
     description = models.TextField(blank=True,null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/',blank=True, null=True)
     URL_image = models.URLField(blank=True, null=True)
     is_featured = models.BooleanField(default=True)
     wishlist = models.ManyToManyField(User, related_name='wishlist_products', blank=True)

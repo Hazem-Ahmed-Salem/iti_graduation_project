@@ -2,23 +2,24 @@
 
 <div>
   <div class="top">
-    <!-- <img src="{% static 'admin_panel/images/logo.png' %}"> -->
+    <img src="{% static 'admin_panel/images/logo.png' %}">
     <h1>Souqora</h1>
   </div>
 
   <div class="slidebar">
 
-    <div class="row{% if request.resolver_match.url_name == 'dashboard' %}-active{% endif %}">
-      <a href="#">
-        <span class="material-symbols-outlined">grid_view</span>
-        <h3>Dashboard</h3>
-      </a>
-    </div>
+<div class="row{% if request.resolver_match.url_name == 'home' %}-active{% endif %}">
+  <a href="{% url 'home' %}">
+    <span class="material-symbols-outlined">home</span>
+    <h3>Main Website</h3>
+  </a>
+</div>
 
-    <div class="row{% if request.resolver_match.url_name == 'customers' %}-active{% endif %}">
-      <a href="{% url 'customers' %}">
+
+    <div class="row{% if request.resolver_match.url_name == 'users' %}-active{% endif %}">
+      <a href="{% url 'users' %}">
         <span class="material-symbols-outlined">person_outline</span>
-        <h3>Customers</h3>
+        <h3>Users</h3>
       </a>
     </div>
 
@@ -37,10 +38,10 @@
       </a>
     </div>
 
-    <div class="row">
-      <a href="#" class="logout">
-        <span class="material-symbols-outlined">logout</span>
-        <h3>Logout</h3>
+    <div class="row logout">
+      <a href="{% url 'logout' %}" class="logout">
+        <span class="material-symbols-outlined ">logout</span>
+        <h3 >Logout</h3>
       </a>
     </div>
     
