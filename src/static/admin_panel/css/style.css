@@ -288,9 +288,10 @@ form input, form select, form textarea {
 }
 
 .product-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+  margin: 10px;
+  width: 220px;
+  height: 280px;
+  object-fit: fill;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
@@ -424,7 +425,7 @@ form input, form select, form textarea {
 
 .card-product-details img {
   margin: 10px;
-  width: 50%;
+  height: auto;
   object-fit:contain;
   border-radius:10%;
 }
@@ -596,7 +597,7 @@ form input, form select, form textarea {
   transform: translateY(-2px);
 }
 
-.add-product-form-container {
+.add-form-container {
   max-width: 600px;
   margin: 20px auto;
   background-color: #fff;
@@ -605,12 +606,12 @@ form input, form select, form textarea {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.add-product-form-container h2 {
+.add-form-container h2 {
   margin-bottom: 20px;
   color: #2c7159;
 }
 
-.add-product-form-container .btn {
+.add-form-container .btn {
   background-color: #2c7159;
   color: white;
   padding: 8px 20px;
@@ -620,7 +621,7 @@ form input, form select, form textarea {
   transition: 0.3s ease;
 }
 
-.add-product-form-container .btn:hover {
+.add-form-container .btn:hover {
   background-color: #245d4c;
 }
 

@@ -8,17 +8,18 @@
 
   <div class="slidebar">
 
-    <div class="row{% if request.resolver_match.url_name == 'dashboard' %}-active{% endif %}">
-      <a href="#">
-        <span class="material-symbols-outlined">grid_view</span>
-        <h3>Dashboard</h3>
-      </a>
-    </div>
+<div class="row{% if request.resolver_match.url_name == 'home' %}-active{% endif %}">
+  <a href="{% url 'home' %}">
+    <span class="material-symbols-outlined">home</span>
+    <h3>Main Website</h3>
+  </a>
+</div>
 
-    <div class="row{% if request.resolver_match.url_name == 'customers' %}-active{% endif %}">
-      <a href="{% url 'customers' %}">
+
+    <div class="row{% if request.resolver_match.url_name == 'users' %}-active{% endif %}">
+      <a href="{% url 'users' %}">
         <span class="material-symbols-outlined">person_outline</span>
-        <h3>Customers</h3>
+        <h3>Users</h3>
       </a>
     </div>
 

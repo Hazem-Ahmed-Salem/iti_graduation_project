@@ -1,15 +1,26 @@
 {% extends 'admin_panel/admin_base.html' %}
-{% block title %}Add Product{% endblock %}
+
+{% block title %}
+  {% if product_form.instance.pk %}Edit Product{% else %}Add New Product{% endif %}
+{% endblock %}
 
 {% block content %}
-<div class="add-product-form-container">
-  <h2>Add New Product</h2>
-<!-- templates/products/add_product.html -->
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ product_form.as_p }}
-  {{ stock_form.as_p }}
-  <button type="submit">Save Product</button>
-</form>
+<div class="add-form-container">
+  <h2>{% if product_form.instance.pk %}Edit Product{% else %}Add New Product{% endif %}</h2>
+  <hr>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ product_form.as_p }}
+    {{ stock_form.as_p }}
+
+    {% if product_form.instance.pk and product_form.instance.image %}
+      <p>Current Image:</p>
+      <img src="{{ product_form.instance.image.url }}" alt="Product Image" width="150" style="margin-bottom: 10px;">
+    {% endif %}
+
+    <button type="submit"> Save Product
+    </button>
+  </form>
 </div>
 {% endblock %}
