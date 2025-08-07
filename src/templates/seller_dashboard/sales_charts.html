@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sales Statistics{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'seller_dashboard/css/sales_charts.css' %}">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Sales Statistics (Last 7 Days)</h1>
+
+        <canvas id="salesChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart Setup -->
+    <script>
+        fetch("{% url 'seller_dashboard:sales_stats' %}")
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.date);
+                const salesData = data.map(item => item.sales);
+
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Sales (E.P)',
+                            data: salesData,
+                            fill: true,
+                            backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            borderWidth: 2,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+
+</body>
+<!-- <body>
+    
+    <h1>Sales Statistics (Last 7 Days)</h1>
+    
+    <canvas id="salesChart" width="400" height="200"></canvas>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        fetch("{% url 'seller_dashboard:sales_stats' %}")
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.date);
+                const salesData = data.map(item => item.sales);
+    
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Sales (E.P)',
+                            data: salesData,
+                            fill: false,
+                            borderWidth: 2,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body> -->
+</html>
+
+{% endblock %}
