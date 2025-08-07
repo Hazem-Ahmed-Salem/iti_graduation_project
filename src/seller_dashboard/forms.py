@@ -1,11 +1,11 @@
-from django import forms
-from products.models import Product
+# from django import forms
+# from products.models import Product
 
 
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ["name", "description", "price","image"]
+# class ProductForm(forms.ModelForm):
+#     class Meta:
+#         model = Product
+#         fields = ["name", "description", "price","image"]
         # widgets = {
         #     "name": forms.TextInput(
         #         attrs={"class": "form-control", "placeholder": "Product Name"}
@@ -28,3 +28,22 @@ class ProductForm(forms.ModelForm):
         #     "price": "Price in P.E",
         #     "image": "image",
         # }
+
+from django import forms
+from products.models import Product
+
+class AddProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'image']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }
+
+class EditProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'image']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 4}),
+        }

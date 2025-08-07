@@ -4,7 +4,7 @@ from django.db.models import Sum
 import datetime
 from products.models import Product
 from orders.models import Sale  
-from .forms import ProductForm
+from .forms import AddProductForm, EditProductForm
 from django.http import JsonResponse
 from django.db.models import Sum
 import datetime
@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
+
 
 ###############################################
 
@@ -74,38 +75,70 @@ def my_products_view(request):
 @login_required
 def add_product_view(request):
     if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES)
+        form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-            product.seller = request.user  # ربط المنتج بالبائع الحالي
+            product.seller = request.user
             product.save()
             return redirect("seller_dashboard:my_products")
     else:
-        form = ProductForm()
+        form = AddProductForm()
 
     context = {"form": form}
     return render(request, "seller_dashboard/add_product.html", context)
+
+# @login_required
+# def add_product_view(request):
+#     if request.method == "POST":
+#         form = ProductForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             product = form.save(commit=False)
+#             product.seller = request.user  # ربط المنتج بالبائع الحالي
+#             product.save()
+#             return redirect("seller_dashboard:my_products")
+#     else:
+#         form = ProductForm()
+
+#     context = {"form": form}
+#     return render(request, "seller_dashboard/add_product.html", context)
 
 
 ###############################################
 @login_required
 def edit_product_view(request, pk):
     seller = request.user
-    product = get_object_or_404(Product, pk=pk, seller=seller)  # تأكد إنه منتج البائع
+    product = get_object_or_404(Product, pk=pk, seller=seller)
 
     if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES, instance=product)
+        form = EditProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
             return redirect("seller_dashboard:my_products")
     else:
-        form = ProductForm(instance=product)
+        form = EditProductForm(instance=product)
 
-    context = {
-        "form": form,
-        "product": product,
-    }
+    context = {"form": form, "product": product}
     return render(request, "seller_dashboard/edit_product.html", context)
+
+
+# @login_required
+# def edit_product_view(request, pk):
+#     seller = request.user
+#     product = get_object_or_404(Product, pk=pk, seller=seller)  # تأكد إنه منتج البائع
+
+#     if request.method == "POST":
+#         form = ProductForm(request.POST, request.FILES, instance=product)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("seller_dashboard:my_products")
+#     else:
+#         form = ProductForm(instance=product)
+
+#     context = {
+#         "form": form,
+#         "product": product,
+#     }
+#     return render(request, "seller_dashboard/edit_product.html", context)
 
 
 ###############################################
