@@ -6,7 +6,7 @@ from products.models import Product
 urlpatterns = [
     
       path('products/', product_detail_view, name='product_list'),
-      path('cart/', views.cart_detail, name='cart_detail'), 
+      path('', views.cart_detail, name='cart_detail'), 
 #     path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     
 ]

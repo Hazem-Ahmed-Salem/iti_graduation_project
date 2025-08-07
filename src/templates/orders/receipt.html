@@ -6,6 +6,11 @@
 {% block navbar %}
 {% include 'user/user_navbar.html' %}
 {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'cart/receipt.css' %}">
+{% endblock %}
+
 {% block contact %}
 <div class="container mt-5">
     <div class="text-center mb-4">
@@ -46,6 +51,7 @@
                 <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
                 <a href="{% url 'my_orders' %}" class="btn btn-outline-secondary">My Orders</a>
             </div>
+
         </div>
     </div>
 </div>

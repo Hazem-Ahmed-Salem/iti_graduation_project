@@ -6,6 +6,11 @@
 {% block navbar %}
 {% include 'user/user_navbar.html' %}
 {% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'cart/my_orders.css' %}">
+{% endblock %}
+
 {% block contact %}
 <div class="container">
     <h2 class="mb-4">My Orders</h2>
