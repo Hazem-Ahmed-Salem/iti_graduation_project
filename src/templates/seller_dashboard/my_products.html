@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'seller_dashboard/components/seller_base.html' %}
 {% load static %}
 {% block content %}
 
@@ -13,7 +13,9 @@
 
     <div class="dashboard-container">
         <h1>Seller's Products</h1>
-
+                <p class="add-link">
+            <a href="{% url 'add_product' %}">➕ Add a New Product</a>
+        </p>
         {% if products %}
             <ul class="product-list">
                 {% for product in products %}
@@ -32,9 +34,7 @@
             <p class="empty-msg">You Haven't Added Any Products Yet.</p>
         {% endif %}
 
-        <p class="add-link">
-            <a href="{% url 'add_product' %}">➕ Add a New Product</a>
-        </p>
+
     </div>
 
 </body>
