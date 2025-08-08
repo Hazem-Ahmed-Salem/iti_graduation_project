@@ -1,42 +1,127 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block navbar %}
+{% block style %}
+<style>
+    .sidebar {
+    width: 240px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
 
+.sidebar-logo {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #d92332;
+    margin-bottom: 30px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #555;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.sidebar-menu a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.sidebar-menu li.active a,
+.sidebar-menu a:hover {
+    background-color: #ffe5e5;
+    color: #d92332;
+}
+
+/* المساحة الرئيسية */
+.main-content {
+    margin-left: 240px; /* نفس عرض السايد بار */
+    padding: 30px;
+    width: calc(100% - 240px);
+}
+
+/* صندوق الإحصائيات */
+.dashboard-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats {
+    font-size: 18px;
+    line-height: 2;
+    color: #555;
+}
+
+.stat-item {
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+span {
+    color: #074932;
+}
+
+</style>
 {% endblock %}
+{% block title %}Seller Control Panel{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="{% static 'seller_dashboard/css/dashboard.css' %}">
-        <title>{% block title %}Seller Control Panel{% endblock %}</title>
-    </head>
-    <body>
 
-<!-- ================ -->
-<div class="sidebar">
+<div class="main-content">
+    <div class="sidebar">
     <div class="sidebar-logo">
         Menu
     </div>
     <ul class="sidebar-menu">
         <li class="active">
-            <a href="{% url 'seller_dashboard:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="{% url 'dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
         </li>
         <li>
-            <a href="{% url 'seller_dashboard:my_products' %}"><i class="fas fa-users"></i> My Products</a>
+            <a href="{% url 'my_products' %}"><i class="fas fa-users"></i> My Products</a>
         </li>
         <li>
-            <a href="{% url 'seller_dashboard:add_product' %}"><i class="fas fa-box"></i>Add Product</a>
+            <a href="{% url 'add_product' %}"><i class="fas fa-box"></i>Add Product</a>
         </li>
         <li>
-            <a href="{% url 'seller_dashboard:my_orders' %}"><i class="fas fa-box"></i>Orders</a>
+            <a href="{% url 'my_orders' %}"><i class="fas fa-box"></i>Orders</a>
         </li>
         <li>
-            <a href="{% url 'seller_dashboard:sales_stats' %}"><i class="fas fa-box"></i>Statistics </a>
+            <a href="{% url 'chart' %}"><i class="fas fa-box"></i>Statistics </a>
         </li>
     </ul>
 </div>
-<div class="main-content">
     <div class="dashboard-container">
         <h1>Seller Control Panel</h1>
 
@@ -47,8 +132,6 @@
         </div>
     </div>
 </div>
-</body>
-</html>
 {% endblock %}
 
 

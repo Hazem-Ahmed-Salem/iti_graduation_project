@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'seller_dashboard/css/add_product.css' %}">
+{% endblock %}
+{% block title %}Add a New Product{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Add a New Product{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'seller_dashboard/css/add_product.css' %}">
-</head>
-<body>
+
+
 
     <div class="dashboard-container">
         <h1>Add a New Product</h1>
@@ -20,17 +18,14 @@
         </form>
 
         <p class="back-link">
-            <a href="{% url 'seller_dashboard:my_products' %}" class="button-link">
+            <a href="{% url 'my_products' %}" class="button-link">
         Back To My Products
     </a>
 </p>
 
-        <!-- <p class="back-link">
-            <a href="{% url 'seller_dashboard:my_products' %}"> Back To My Products</a>
-        </p> -->
+
     </div>
 
-</body>
-</html>
+
 
 {% endblock %}

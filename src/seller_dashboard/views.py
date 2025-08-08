@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.db.models import Sum
 import datetime
 from products.models import Product
+from orders.models import Order
 from orders.models import Sale  
 from .forms import AddProductForm, EditProductForm
 from django.http import JsonResponse
@@ -12,6 +13,8 @@ from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
 from django.views.decorators.cache import never_cache
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 ###############################################
 
@@ -80,7 +83,7 @@ def add_product_view(request):
             product = form.save(commit=False)
             product.seller = request.user
             product.save()
-            return redirect("seller_dashboard:my_products")
+            return redirect("my_products")
     else:
         form = AddProductForm()
 
@@ -98,7 +101,7 @@ def edit_product_view(request, pk):
         form = EditProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect("seller_dashboard:my_products")
+            return redirect("my_products")
     else:
         form = EditProductForm(instance=product)
 
@@ -114,7 +117,7 @@ def delete_product_view(request, pk):
 
     if request.method == "POST":
         product.delete()
-        return redirect("seller_dashboard:my_products")
+        return redirect("my_products")
 
     context = {"product": product}
     return render(request, "seller_dashboard/confirm_delete.html", context)
@@ -131,9 +134,9 @@ def my_orders_view(request):
     )
 
     order_items = []
-
+    orders =list (Order.objects.all())
     # لف على كل الطلبات الموجودة في Sale
-    for sale in Sale.objects.select_related("order"):
+    for sale in orders:
         for item in sale.products:  # sale.products is JSON list
             product_id = item.get("id")
             if product_id in seller_product_ids:
@@ -142,7 +145,7 @@ def my_orders_view(request):
                         "product": Product.objects.get(id=product_id),
                         "quantity": item.get("quantity", 1),
                         "price": item.get("price", 0),
-                        "order": sale.order,
+                        
                     }
                 )
 
@@ -151,8 +154,9 @@ def my_orders_view(request):
     return render(request, "seller_dashboard/orders.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@api_view (['GET'])
+
+
 def sales_stats_view(request):
     seller = request.user
 
@@ -188,6 +192,8 @@ def sales_stats_view(request):
         day = (seven_days_ago + timedelta(days=i)).strftime("%Y-%m-%d")
         result.append({"date": day, "sales": round(sales_per_day.get(day, 0), 2)})
 
-    return JsonResponse(result, safe=False)
+    return Response({'success':result}, status=200)
 
+def statistics (request):
+    return render(request,'seller_dashboard/sales_charts.html')
 ###############################################
