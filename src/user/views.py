@@ -32,13 +32,13 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            email = form.cleaned_data['email'].lower()
             password = form.cleaned_data['password']
             user = User.objects.filter(email=email).first()
             if user and user.check_password(password):
                 login(request, user)
                 if user.user_role == 'admin':
-                    return redirect('customers')
+                    return redirect('users')
                 elif user.user_role == 'seller':
                     return redirect('dashboard')
                 else:

@@ -65,7 +65,7 @@ h1{
   transition: all 0.3s ease-in-out;
 }
 .row.logout:hover a{
-  background-color: #c0392b;
+  background-color: #2d100d;
   color: white;
   border-radius: 15px;
   text-align: center;
@@ -158,9 +158,6 @@ table th {
   color: #444;
 }
 
-table tr:hover {
-  background-color: #fff2f2;
-}
 
 .status {
   padding: 4px 10px;
@@ -175,7 +172,7 @@ table tr:hover {
 
 .status.inactive {
   background-color: #f8d7da;
-  color: #2c7159a4;
+  color: red;
 }
 
 /* ===== Add Product Button ===== */
@@ -237,7 +234,7 @@ form button:hover {
 
   table tr {
     margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
   }
 
@@ -548,7 +545,6 @@ form input, form select, form textarea {
 }
 
 .btn-delete {
-  background-color: #c0392b;
   color: #c0392b;
     width:auto;
 }

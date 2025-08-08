@@ -62,7 +62,10 @@ body {
 
 </style>
 {% endblock %}
+  <!-- Ensure CSRF cookie is set by rendering the token once -->
+  <form style="display:none" aria-hidden="true">{% csrf_token %}</form>
+
+  {% block scripts %}
+  {% endblock %}
 </body>
-{% block scripts %}
-{% endblock %}
 </html>

@@ -21,7 +21,7 @@
               <p class="text-dark fw-semibold mb-2">${{ product.price }}</p>
 
               <div class="d-flex justify-content-center align-items-center gap-2">
-                <a href="{% url 'product_detail' product.pk %}" class="my-btn">View Details</a>
+                <button id="add-to-cart" type="button" name="{% url 'add_to_cart' %}" data-product-id="{{ product.id }}" class="my-btn">Add to Cart</button>
                 <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn d-flex align-items-center justify-content-center gap-1">
                   <i class="bi bi-heart-fill text-danger"></i>
                 </a>
@@ -43,6 +43,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'products/js/product_list.js' %}" defer></script>
 <script src="{% static 'products/js/wishlist.js' %}" defer></script>
 
 {% endblock %}

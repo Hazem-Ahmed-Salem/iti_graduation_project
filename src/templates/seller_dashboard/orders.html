@@ -1,26 +1,44 @@
-<h1>الطلبات على منتجاتي</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Orders For My Products{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'seller_dashboard/css/orders.css' %}">
+</head>
+<body>
+<div class="dashboard-container">
+        <h1>Orders For My Products</h1>
 
-{% if order_items %}
-    <table>
-        <thead>
-            <tr>
-                <th>المنتج</th>
-                <th>الكمية</th>
-                <th>السعر</th>
-                <th>تاريخ الطلب</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order_items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.price }} جنيه</td>
-                <td>{{ item.order.created_at|date:"Y-m-d H:i" }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>لا يوجد طلبات على منتجاتك حتى الآن.</p>
-{% endif %}
+        {% if order_items %}
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Order Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price }} جنيه</td>
+                            <td>{{ item.order.created_at|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="empty-msg">There Are No Orders For Your Products Yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+{% endblock %}
+

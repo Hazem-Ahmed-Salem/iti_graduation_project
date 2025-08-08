@@ -76,9 +76,9 @@
             </span>
           {% endif %}
         </a>
-        <a href="#" class="text-dark "><i class="bi bi-cart fs-5 text-color" ></i></a>
+        <a href="{% url 'shopping_cart' %}" class="text-dark "><i class="bi bi-cart fs-5 text-color" ></i></a>
         {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}"  class="text-dark"><i class="bi bi-person-circle fs-5 text-color"></i></a>
+        <a href="{% url 'profile' %}" class="text-dark"><i class="bi bi-person-circle fs-5 text-color"></i></a>
         {% endif %}
       </div>
 
