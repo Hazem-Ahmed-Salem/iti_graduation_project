@@ -1,12 +1,10 @@
 {% extends 'admin_panel/orders_base.html' %}
    
-
             {% block content2 %}
           <!-- second row-->
 
           {% for order in OrdersList%}
-          {% if order.status == "cancelled" %}
-            <tr  style="text-decoration: line-through 3px; color: #000000; "  >
+            <tr {% if order.status == "cancelled"%} style="text-decoration: line-through 2px; color: #000000; " {% endif %}>
 
               <td>{{order.id}}</td>
 
@@ -49,6 +47,7 @@
                   </li>
                 {% endfor %}
                 </ol>
+
                 <div>Total_price : {{ order.total_price }}</div>
                 
                  
@@ -69,11 +68,10 @@
             </td>
 
 
-
+              
 
             </tr>
-           {% endif %}
+      
             {% endfor %}
 
             {% endblock content2 %}
-
