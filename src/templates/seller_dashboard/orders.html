@@ -1,14 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'seller_dashboard/components/seller_base.html' %}
 {% load static %}
-{% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Orders For My Products{% endblock %}</title>
+{% block style %}
     <link rel="stylesheet" href="{% static 'seller_dashboard/css/orders.css' %}">
-</head>
-<body>
+{% endblock %}
+{% block title %}Orders For My Products{% endblock %}
+{% block content %}
 <div class="dashboard-container">
         <h1>Orders For My Products</h1>
 
@@ -19,6 +15,7 @@
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Total Price</th>
                         <th>Order Date</th>
                     </tr>
                 </thead>
@@ -27,8 +24,9 @@
                         <tr>
                             <td>{{ item.product.name }}</td>
                             <td>{{ item.quantity }}</td>
-                            <td>{{ item.price }} جنيه</td>
-                            <td>{{ item.order.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>{{ item.price }} E.P</td>
+                            <td>{{ item.total_price }} E.P</td>
+                            <td>{{ item.date|date:"Y-m-d H:i" }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -37,8 +35,6 @@
             <p class="empty-msg">There Are No Orders For Your Products Yet.</p>
         {% endif %}
     </div>
-</body>
-</html>
 
 {% endblock %}
 
