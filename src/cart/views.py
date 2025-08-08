@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from products.models import Product
 from .models import CartItem
@@ -7,19 +8,43 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 
 
+@login_required
 def add_to_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    cart[str(product_id)] = cart.get(str(product_id), 0) + 1
-    request.session['cart'] = cart
-    return redirect ('cart_detail')
+    
+    product = get_object_or_404(Product, id=product_id)
+
+    cart_item, created = CartItem.objects.get_or_create(
+        customer=request.user,
+        product=product,
+        defaults={
+            'quantity': 1,
+            'price_per_unit': product.price,
+            'order_price': product.price
+        }
+    )
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.order_price = cart_item.price_per_unit * cart_item.quantity
+        cart_item.save()
+
+    return redirect('cart_detail')
 
 
+@login_required
 def remove_from_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    if str(product_id) in cart:
-        del cart[str(product_id)]
-    request.session['cart'] = cart
-    return redirect ('cart_detail')
+    
+    cart_item = get_object_or_404(
+        CartItem,
+        customer=request.user,
+        product_id=product_id
+    )
+
+    
+    cart_item.delete()
+
+    
+    return redirect('cart_detail')
 
 
 @login_required
