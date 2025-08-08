@@ -1,10 +1,40 @@
+/* المساحة الرئيسية */
+.main-content {
+    margin-left: 240px; /* نفس عرض السايد بار */
+    padding: 30px;
+    width: calc(100% - 240px);
+}
 
+/* صندوق الإحصائيات */
+.dashboard-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
 
+.dashboard-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
+.stats {
+    font-size: 18px;
+    line-height: 2;
+    color: #555;
+}
 
+.stat-item {
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
 
-
-
-
+span {
+    color: #074932;
+}
 
 

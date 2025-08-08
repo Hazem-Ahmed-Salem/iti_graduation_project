@@ -140,12 +140,14 @@ def my_orders_view(request):
         for item in sale.products:  # sale.products is JSON list
             product_id = item.get("id")
             if product_id in seller_product_ids:
+                product = Product.objects.get(id=product_id)
                 order_items.append(
                     {
-                        "product": Product.objects.get(id=product_id),
+                        "product": product,
                         "quantity": item.get("quantity", 1),
-                        "price": item.get("price", 0),
-                        
+                        "price": product.price,
+                        "total_price":float(product.price) * int(item.get("quantity", 1)),
+                        "date":sale.created_at
                     }
                 )
 

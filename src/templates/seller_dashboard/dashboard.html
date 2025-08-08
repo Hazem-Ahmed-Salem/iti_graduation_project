@@ -2,67 +2,7 @@
 {% load static %}
 {% block style %}
 <style>
-    .sidebar {
-    width: 240px;
-    background-color: #fff;
-    border-right: 1px solid #ddd;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-logo {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: #d92332;
-    margin-bottom: 30px;
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-    flex-grow: 1;
-}
-
-.sidebar-menu li {
-    margin-bottom: 10px;
-}
-
-.sidebar-menu a {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    color: #555;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-
-.sidebar-menu a i {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
-.sidebar-menu li.active a,
-.sidebar-menu a:hover {
-    background-color: #ffe5e5;
-    color: #d92332;
-}
-
-/* المساحة الرئيسية */
-.main-content {
-    margin-left: 240px; /* نفس عرض السايد بار */
-    padding: 30px;
-    width: calc(100% - 240px);
-}
-
-/* صندوق الإحصائيات */
+    /* صندوق الإحصائيات */
 .dashboard-container {
     background-color: #fff;
     padding: 30px;
@@ -93,9 +33,9 @@
 span {
     color: #074932;
 }
-
 </style>
 {% endblock %}
+
 {% block title %}Seller Control Panel{% endblock %}
 {% block content %}
 

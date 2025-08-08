@@ -24,8 +24,8 @@
                         <span class="product-name">{{ product.name }}</span> -
                         <span class="product-price">{{ product.price }} E.P</span>
                         <span class="product-actions">
-                            [ <a href="{% url 'edit_product' product.pk %}">Edit</a> ]
-                            [ <a href="{% url 'delete_product' product.pk %}">Delete</a> ]
+                            <a href="{% url 'edit_product' product.pk %}">Edit</a> 
+                            <a href="{% url 'delete_product' product.pk %}">Delete</a> 
                         </span>
                     </li>
                 {% endfor %}
