@@ -12,7 +12,31 @@
         <title>{% block title %}Seller Control Panel{% endblock %}</title>
     </head>
     <body>
-        
+
+<!-- ================ -->
+<div class="sidebar">
+    <div class="sidebar-logo">
+        Menu
+    </div>
+    <ul class="sidebar-menu">
+        <li class="active">
+            <a href="{% url 'seller_dashboard:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+        </li>
+        <li>
+            <a href="{% url 'seller_dashboard:my_products' %}"><i class="fas fa-users"></i> My Products</a>
+        </li>
+        <li>
+            <a href="{% url 'seller_dashboard:add_product' %}"><i class="fas fa-box"></i>Add Product</a>
+        </li>
+        <li>
+            <a href="{% url 'seller_dashboard:my_orders' %}"><i class="fas fa-box"></i>Orders</a>
+        </li>
+        <li>
+            <a href="{% url 'seller_dashboard:sales_stats' %}"><i class="fas fa-box"></i>Statistics </a>
+        </li>
+    </ul>
+</div>
+<div class="main-content">
     <div class="dashboard-container">
         <h1>Seller Control Panel</h1>
 
@@ -22,7 +46,7 @@
             <p class="stat-item">Total Sales: <span>{{ total_sales }} E.P</span></p>
         </div>
     </div>
-
+</div>
 </body>
 </html>
 {% endblock %}

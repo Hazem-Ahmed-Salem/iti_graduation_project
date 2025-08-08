@@ -5,8 +5,6 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    direction: rtl;
-    text-align: right;
 }
 
 .dashboard-container h1 {
@@ -56,7 +54,7 @@
     background-color: #074932;
 }
 
-.back-link {
+.back-link a {
     margin-top: 20px;
     display: block;
     font-weight: bold;

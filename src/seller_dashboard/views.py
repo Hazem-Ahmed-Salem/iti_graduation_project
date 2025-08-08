@@ -11,12 +11,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
-
+from django.views.decorators.cache import never_cache
 
 ###############################################
 
 
 @login_required
+@never_cache
 def dashboard_view(request):
     seller = request.user
 
@@ -58,9 +59,9 @@ def dashboard_view(request):
 
     return render(request, "seller_dashboard/dashboard.html", context)
 
-
 ###############################################
 @login_required
+@never_cache
 def my_products_view(request):
     seller = request.user
     products = Product.objects.filter(seller=seller)
@@ -69,9 +70,9 @@ def my_products_view(request):
 
     return render(request, "seller_dashboard/my_products.html", context)
 
-
 ###############################################
 @login_required
+@never_cache
 def add_product_view(request):
     if request.method == "POST":
         form = AddProductForm(request.POST, request.FILES)
@@ -86,24 +87,9 @@ def add_product_view(request):
     context = {"form": form}
     return render(request, "seller_dashboard/add_product.html", context)
 
-# @login_required
-# def add_product_view(request):
-#     if request.method == "POST":
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             product = form.save(commit=False)
-#             product.seller = request.user  # ربط المنتج بالبائع الحالي
-#             product.save()
-#             return redirect("seller_dashboard:my_products")
-#     else:
-#         form = ProductForm()
-
-#     context = {"form": form}
-#     return render(request, "seller_dashboard/add_product.html", context)
-
-
 ###############################################
 @login_required
+@never_cache
 def edit_product_view(request, pk):
     seller = request.user
     product = get_object_or_404(Product, pk=pk, seller=seller)
@@ -119,29 +105,9 @@ def edit_product_view(request, pk):
     context = {"form": form, "product": product}
     return render(request, "seller_dashboard/edit_product.html", context)
 
-
-# @login_required
-# def edit_product_view(request, pk):
-#     seller = request.user
-#     product = get_object_or_404(Product, pk=pk, seller=seller)  # تأكد إنه منتج البائع
-
-#     if request.method == "POST":
-#         form = ProductForm(request.POST, request.FILES, instance=product)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("seller_dashboard:my_products")
-#     else:
-#         form = ProductForm(instance=product)
-
-#     context = {
-#         "form": form,
-#         "product": product,
-#     }
-#     return render(request, "seller_dashboard/edit_product.html", context)
-
-
 ###############################################
 @login_required
+@never_cache
 def delete_product_view(request, pk):
     seller = request.user
     product = get_object_or_404(Product, pk=pk, seller=seller)
@@ -153,9 +119,9 @@ def delete_product_view(request, pk):
     context = {"product": product}
     return render(request, "seller_dashboard/confirm_delete.html", context)
 
-
 ###############################################
 @login_required
+@never_cache
 def my_orders_view(request):
     seller = request.user
 
@@ -184,9 +150,9 @@ def my_orders_view(request):
 
     return render(request, "seller_dashboard/orders.html", context)
 
-
 ###############################################
 @login_required
+@never_cache
 def sales_stats_view(request):
     seller = request.user
 
@@ -223,6 +189,5 @@ def sales_stats_view(request):
         result.append({"date": day, "sales": round(sales_per_day.get(day, 0), 2)})
 
     return JsonResponse(result, safe=False)
-
 
 ###############################################
