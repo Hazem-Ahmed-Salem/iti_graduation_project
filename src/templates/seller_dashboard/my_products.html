@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'seller_dashboard/components/seller_base.html' %}
 {% load static %}
 {% block content %}
 
@@ -13,16 +13,19 @@
 
     <div class="dashboard-container">
         <h1>Seller's Products</h1>
-
+                <p class="add-link">
+            <a href="{% url 'add_product' %}">➕ Add a New Product</a>
+        </p>
         {% if products %}
             <ul class="product-list">
                 {% for product in products %}
                     <li class="product-item">
+                        <span class="product-name">{{ product.id }}</span> -
                         <span class="product-name">{{ product.name }}</span> -
                         <span class="product-price">{{ product.price }} E.P</span>
                         <span class="product-actions">
-                            [ <a href="{% url 'seller_dashboard:edit_product' product.pk %}">Edit</a> ]
-                            [ <a href="{% url 'seller_dashboard:delete_product' product.pk %}">Delete</a> ]
+                            <a href="{% url 'edit_product' product.pk %}">Edit</a> 
+                            <a href="{% url 'delete_product' product.pk %}">Delete</a> 
                         </span>
                     </li>
                 {% endfor %}
@@ -31,9 +34,7 @@
             <p class="empty-msg">You Haven't Added Any Products Yet.</p>
         {% endif %}
 
-        <p class="add-link">
-            <a href="{% url 'seller_dashboard:add_product' %}">➕ Add a New Product</a>
-        </p>
+
     </div>
 
 </body>
