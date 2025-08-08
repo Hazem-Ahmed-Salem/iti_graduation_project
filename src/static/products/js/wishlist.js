@@ -40,7 +40,6 @@ document.querySelectorAll('#wishlist').forEach(function (element) {
     });
   });
 
-
   document.querySelectorAll('#add-to-cart').forEach(function (element) {
     element.addEventListener('click', function (event) {
       event.preventDefault();
@@ -89,4 +88,3 @@ document.querySelectorAll('#wishlist').forEach(function (element) {
       .catch(error => console.error('Error:', error));
     });
   });
-

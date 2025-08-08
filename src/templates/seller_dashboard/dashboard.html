@@ -1,9 +1,45 @@
 {% extends 'seller_dashboard/components/seller_base.html' %}
 {% load static %}
+{% block style %}
+<style>
+    /* صندوق الإحصائيات */
+.dashboard-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats {
+    font-size: 18px;
+    line-height: 2;
+    color: #555;
+}
+
+.stat-item {
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+span {
+    color: #074932;
+}
+</style>
+{% endblock %}
+
+{% block title %}Seller Control Panel{% endblock %}
 {% block content %}
-        <link rel="stylesheet" href="{% static 'seller_dashboard/css/dashboard.css' %}">
-        <title>{% block title %}Seller Control Panel{% endblock %}</title>
-        
+
+<div class="main-content">
     <div class="dashboard-container">
         <h1>Seller Control Panel</h1>
 
@@ -13,9 +49,7 @@
             <p class="stat-item">Total Sales: <span>{{ total_sales }} E.P</span></p>
         </div>
     </div>
-
-</body>
-</html>
+</div>
 {% endblock %}
 
 

@@ -1,15 +1,12 @@
-body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #f5f5f5;
-    direction: rtl;
-    text-align: right;
-    margin: 0;
-    padding: 0;
+/* المساحة الرئيسية */
+.main-content {
+    margin-left: 240px; /* نفس عرض السايد بار */
+    padding: 30px;
+    width: calc(100% - 240px);
 }
 
+/* صندوق الإحصائيات */
 .dashboard-container {
-    max-width: 800px;
-    margin: 50px auto;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -39,3 +36,5 @@ body {
 span {
     color: #074932;
 }
+
+
