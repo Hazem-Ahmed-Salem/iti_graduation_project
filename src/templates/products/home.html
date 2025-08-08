@@ -13,15 +13,24 @@
   <p class="text-danger fw-bold mb-1">Categories</p>
   <h4 class="fw-bold mb-3">Browse By Category</h4>
 
-  <div class="d-flex flex-wrap gap-3">
+  <div class="row g-4">
     {% for category in categories %}
-      <a href="{% url 'category_products' category.pk %}"
-         class="text-decoration-none" >
-        <div class="d-flex justify-content-center align-items-center border rounded px-4 py-3 bg-white text-dark"
-            style="width: 130px; height: 90px; transition: 0.3s;">
-          <div class="fw-semibold text-center">{{ category.name }}</div>
-        </div>
-      </a>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <a href="{% url 'category_products' category.pk %}" class="text-decoration-none">
+          <div class="card border-0 shadow-sm h-100 category-card transition" style="transition: box-shadow 0.3s;">
+            <div class="bg-light d-flex justify-content-center align-items-center" style="height: 120px;">
+              {% if category.image %}
+                <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-height: 80px; max-width: 70px; object-fit: contain;">
+              {% else %}
+                <span class="d-block" style="height: 80px;"></span>
+              {% endif %}
+            </div>
+            <div class="card-body p-2 text-center">
+              <div class="fw-semibold text-dark">{{ category.name }}</div>
+            </div>
+          </div>
+        </a>
+      </div>
     {% endfor %}
   </div>
 </div>
@@ -35,7 +44,7 @@
 
  <div class="row">
     {% for product in products %}
-      <div class="col-md-3 mb-4" >
+      <div id="{{ product.id }}" class="col-md-3 mb-4" >
         <div class="card border-0 shadow-sm h-100">
          <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
 
@@ -50,7 +59,7 @@
          </a>
 
             
-            <a href="#" class="my-btn">Add to Cart</a>
+            <button id="add-to-cart" name="{% url 'add_to_cart'%}" class="my-btn add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
             <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
                     <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
             </a>

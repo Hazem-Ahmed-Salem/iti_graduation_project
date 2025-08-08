@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} cart {% endblock %}
+{% block title %} Shopping Cart {% endblock %}
 
 {% block navbar %}
-{% include 'user/user_navbar.html' %}
+{% include 'products/components/detail_navbar.html' %}
 {% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'cart/cart_detail.css' %}">
 {% endblock %}
 
-{% block contact %}
+{% block content %}
 
 <div class="container mt-5">
     <h2 class="mb-4 fw-bold">Shopping Cart</h2>
