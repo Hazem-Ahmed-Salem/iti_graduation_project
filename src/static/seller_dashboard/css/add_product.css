@@ -1,0 +1,61 @@
+.dashboard-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-form {
+    margin-top: 20px;
+}
+
+.product-form p {
+    margin-bottom: 15px;
+}
+
+.product-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.product-form input,
+.product-form textarea,
+.product-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    background-color: #2c7159a4;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.submit-button:hover {
+    background-color:#074932 ;
+}
+
+.back-link a{
+    text-decoration: none;
+    margin-top: 20px;
+    display: block;
+    font-weight: bold;
+    color: #2c7159a4;
+}
+
+.back-link a :hover {
+    color: #074932;
+}

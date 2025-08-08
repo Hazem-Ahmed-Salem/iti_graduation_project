@@ -1,9 +1,28 @@
-<h1>حذف المنتج</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Delete Product{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'seller_dashboard/css/confirm_delete.css' %}">
+</head>
+<body>
+<div class="dashboard-container">
+        <h1>Delete Product</h1>
 
-<p>هل أنت متأكد أنك تريد حذف المنتج: <strong>{{ product.name }}</strong>؟</p>
+        <p class="confirm-text">Are You Sure You Want To Delete The Product
+            <strong>{{ product.name }}</strong>?
+        </p>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">نعم، احذف</button>
-    <a href="{% url 'seller_dashboard:my_products' %}">❌ إلغاء</a>
-</form>
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="submit-button danger-button">Yes, Delete</button>
+            <a href="{% url 'my_products' %}" class="cancel-button">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock %}

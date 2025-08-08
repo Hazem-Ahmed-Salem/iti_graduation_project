@@ -48,7 +48,7 @@
   <div class="row">
     {% for product in products %}
       <div class="col-md-3 mb-4" >
-        <div class="card border-0 shadow-sm h-100">
+        <div class="card product-card border-0 shadow-sm h-100">
          <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
 
           <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
@@ -62,7 +62,7 @@
          </a>
 
             
-            <a href="#" class="my-btn">Add to Cart</a>
+            <button id="add-to-cart" type="button" name="{% url 'add_to_cart' %}" data-product-id="{{ product.id }}" class="my-btn">Add to Cart</button>
             <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
                     <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
             </a>

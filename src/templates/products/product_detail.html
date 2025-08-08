@@ -36,14 +36,14 @@
 
         <p class="fw-light text-muted mb-4">Category: {{ product.category.name }}</p>
        <div class="d-flex align-items-center gap-2 mb-3">
-  <form method="post" action="#" class="d-flex align-items-center gap-2">
+  <form method="" action="" class="d-flex align-items-center gap-2">
     {% csrf_token %}
        <div class="input-group" style="width: 140px;">
           <button type="button" class="my-btn" onclick="this.nextElementSibling.stepDown()">-</button>
-          <input type="number" name="quantity" value="1" min="1" class="form-control text-center">
+          <input id="quantity" type="number" name="quantity" value="1" min="1" class="form-control text-center">
           <button type="button" class="my-btn" onclick="this.previousElementSibling.stepUp()">+</button>
        </div>
-    <button type="submit" class="my-btn">Add to Cart</button>
+    <button id="add-to-cart" name="{% url 'add_to_cart' %}" data-product-id="{{ product.id }}" type="button" class="my-btn">Add to Cart</button>
   </form>
 
   

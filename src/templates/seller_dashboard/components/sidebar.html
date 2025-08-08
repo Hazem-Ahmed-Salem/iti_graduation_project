@@ -2,7 +2,7 @@
 
 <div>
   <div class="top">
-    <h1><i class="fas fa-user-shield"></i> Admin Panel</h1>
+    <h1><i class="fas fa-user-shield"></i> Seller Panel</h1>
   </div>
 
   <div class="slidebar">
@@ -15,23 +15,23 @@
 </div>
 
 
-    <div class="row{% if request.resolver_match.url_name == 'users' %}-active{% endif %}">
-      <a href="{% url 'users' %}">
+    <div class="row{% if request.resolver_match.url_name == 'dashboard' %}-active{% endif %}">
+      <a href="{% url 'dashboard' %}">
         <span class="material-symbols-outlined">person_outline</span>
-        <h3>Users</h3>
+        <h3>Dashboard</h3>
       </a>
     </div>
 
-    <div class="row{% if request.resolver_match.url_name == 'products' %}-active{% endif %}">
-      <a href="{% url 'products' %}">
+    <div class="row{% if request.resolver_match.url_name == 'my_products' %}-active{% endif %}">
+      <a href="{% url 'my_products' %}">
         <span class="material-symbols-outlined">receipt_long</span>
         <h3>Products</h3>
       </a>
     </div>
 
 
-    <div class="row{% if request.resolver_match.url_name == 'orders' %}-active{% endif %}">
-      <a href="#">
+    <div class="row{% if request.resolver_match.url_name == 'my_orders' %}-active{% endif %}">
+      <a href="{% url 'my_orders' %}">
         <span class="material-symbols-outlined">shopping_cart</span>
         <h3>Orders</h3>
       </a>

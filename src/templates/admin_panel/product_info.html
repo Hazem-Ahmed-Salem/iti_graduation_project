@@ -13,6 +13,7 @@
         {% if product.category %}
         <div class="category">Category: {{ product.category.name }}</div>
         {% endif %}
+        <div class="category">Seller: {{ product.seller }}</div>
 
         {% with quantity=product.get_stock_quantity %}
         <div class="stock {% if quantity == 0 %}out{% endif %}">

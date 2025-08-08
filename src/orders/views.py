@@ -13,7 +13,7 @@ def checkout_view(request):
 
     if not cart_items.exists():
         messages.warning(request, "Your cart is empty.")
-        return redirect('cart_detail')
+        return redirect('shopping_cart')
 
     addresses = Address.objects.filter(user=user)
 

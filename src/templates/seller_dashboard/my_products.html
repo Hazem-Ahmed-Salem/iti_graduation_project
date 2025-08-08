@@ -1,17 +1,43 @@
-<h1>منتجاتي</h1>
+{% extends 'seller_dashboard/components/seller_base.html' %}
+{% load static %}
+{% block content %}
 
-{% if products %}
-    <ul>
-        {% for product in products %}
-            <li>
-                {{ product.name }} - {{ product.price }} جنيه
-                [ <a href="{% url 'seller_dashboard:edit_product' product.pk %}">تعديل</a> ]
-                [ <a href="{% url 'seller_dashboard:delete_product' product.pk %}">حذف</a> ]
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>لم تقم بإضافة أي منتجات بعد.</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Seller's Products{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'seller_dashboard/css/my_products.css' %}">
+</head>
+<body>
 
-<p><a href="{% url 'seller_dashboard:add_product' %}">➕ إضافة منتج جديد</a></p>
+    <div class="dashboard-container">
+        <h1>Seller's Products</h1>
+                <p class="add-link">
+            <a href="{% url 'add_product' %}">➕ Add a New Product</a>
+        </p>
+        {% if products %}
+            <ul class="product-list">
+                {% for product in products %}
+                    <li class="product-item">
+                        <span class="product-name">{{ product.id }}</span> -
+                        <span class="product-name">{{ product.name }}</span> -
+                        <span class="product-price">{{ product.price }} E.P</span>
+                        <span class="product-actions">
+                            <a href="{% url 'edit_product' product.pk %}">Edit</a> 
+                            <a href="{% url 'delete_product' product.pk %}">Delete</a> 
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-msg">You Haven't Added Any Products Yet.</p>
+        {% endif %}
+
+
+    </div>
+
+</body>
+</html>
+
+{% endblock %}

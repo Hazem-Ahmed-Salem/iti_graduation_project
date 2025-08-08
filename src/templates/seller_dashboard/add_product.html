@@ -1,9 +1,31 @@
-<h1>إضافة منتج جديد</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'seller_dashboard/css/add_product.css' %}">
+{% endblock %}
+{% block title %}Add a New Product{% endblock %}
+{% block content %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">حفظ المنتج</button>
-</form>
 
-<p><a href="{% url 'seller_dashboard:my_products' %}">🔙 العودة إلى منتجاتي</a></p>
+
+    <div class="dashboard-container">
+        <h1>Add a New Product</h1>
+
+        <form method="post" enctype="multipart/form-data" class="product-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-button"> Save The Product</button>
+        </form>
+
+        <p class="back-link">
+            <a href="{% url 'my_products' %}" class="button-link">
+        Back To My Products
+    </a>
+</p>
+
+
+    </div>
+
+
+
+{% endblock %}
