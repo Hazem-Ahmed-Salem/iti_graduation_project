@@ -1,0 +1,77 @@
+{% extends 'admin_panel/orders_base.html' %}
+   
+            {% block content2 %}
+          <!-- second row-->
+
+          {% for order in OrdersList%}
+            <tr {% if order.status == "cancelled"%} style="text-decoration: line-through 2px; color: #000000; " {% endif %}>
+
+              <td>{{order.id}}</td>
+
+              <td>{{order.buyer}}</td>
+              
+
+              <td>
+                
+                <ol>
+                {% for element in order.products %}
+                
+                  <li>
+                    {{element.name}}
+                  </li>
+                {% endfor %}
+                </ol>
+              </td>
+
+              <td>
+                
+                <ol>
+                {% for element in order.products %}
+                
+                  <li>
+                    <img src="{{element.image}}">
+                    
+                  </li>
+                {% endfor %}
+                </ol>
+              </td>
+
+
+              <td>
+                
+                <ol>
+                {% for element in order.products %}
+                
+                  <li>
+                    {{element.discount_price}}
+                  </li>
+                {% endfor %}
+                </ol>
+
+                <!-- <div>Total_price :order.total_price </div> -->
+                
+                 
+           
+              </td>
+
+              <td>#{{order.status}}</td>
+
+              <td>{{order.delivery_address}}</td>
+
+              <td>{{order.payment_method}}</td>
+
+              <td>
+                <form method="POST" action="{% url 'Delete_Order' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Are you sure to Delete this order?')">🗑 Delete</button>
+                </form>
+            </td>
+
+
+              
+
+            </tr>
+      
+            {% endfor %}
+
+            {% endblock content2 %}
