@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Order #{{ order.id }} {% endblock %}
+
+{% block navbar %}
+{% include 'products/components/detail_navbar.html' %}
+{% endblock %}
+
+{% block style %}
+<style>
+  body{ background-color: beige; }
+  .white{ background-color:#f8f9fa; color:black; border:1px solid #e0e0e0; border-radius:10px; }
+  .orders-meta { padding:15px; margin-bottom:20px; }
+  .items-header { display:flex; font-weight:600; border-bottom:2px solid #ddd; padding-bottom:10px; margin-bottom:15px; gap:20px; }
+  .items-header span { text-align:center; }
+  .order-item-card { display:flex; align-items:center; gap:20px; padding:15px; border:1px solid #e0e0e0; border-radius:10px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
+  .product-name { flex:1; font-weight:600; font-size:16px; color:#333; }
+  .price, .subtotal { font-weight:bold; color:#222; width:140px; text-align:center; }
+  .qty { width:100px; text-align:center; font-weight:600; }
+  .cart-total-card { border-radius:10px; overflow:hidden; }
+  .cart-total-card .card-header { background-color:#f8f9fa; font-weight:600; }
+  .back-actions { margin-top:16px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-3">Order #{{ order.id }}</h2>
+  <div class="white orders-meta">
+    <div class="text-muted">Placed on {{ order.created_at|date:"Y-m-d H:i" }}</div>
+    <div>Status: {{ order.status|title }}</div>
+    <div>Payment: {{ order.payment_method }}</div>
+  </div>
+
+  <div class="items-header">
+    <span class="flex-fill text-start">Product</span>
+    <span class="price">Unit Price</span>
+    <span class="qty">Qty</span>
+    <span class="subtotal">Subtotal</span>
+  </div>
+
+  <div class="d-flex flex-column gap-3">
+    {% for item in order.products %}
+    <div class="order-item-card">
+      <span class="product-name">{{ item.product_name }}</span>
+      <span class="price">${{ item.price_per_unit }}</span>
+      <span class="qty">x{{ item.quantity }}</span>
+      <span class="subtotal">${{ item.order_price }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card cart-total-card mt-5 shadow-sm">
+    <div class="card-header">Order Total</div>
+    <div class="card-body">
+      <p class="d-flex justify-content-between fw-bold">
+        <span>Total</span>
+        <span>${{ order.total_price }}</span>
+      </p>
+      <div class="back-actions">
+        <a href="{% url 'user_orders' %}" class="btn ms-auto view-btn" style="color:white; background-color:#2c7159a4;">Back to My Orders</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

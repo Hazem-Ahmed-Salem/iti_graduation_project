@@ -633,3 +633,19 @@ form input, form select, form textarea {
 
 
 
+/* ===== Scoped overrides for seller dashboard tables ===== */
+.page .btn-edit,
+.page .btn-delete {
+  width: 110px;
+  justify-content: center;
+}
+
+.page .btn-delete {
+  background-color: #c0392b !important;
+  color: #fff !important;
+}
+
+.page .btn-delete:hover {
+  background-color: #a93226 !important;
+}
+

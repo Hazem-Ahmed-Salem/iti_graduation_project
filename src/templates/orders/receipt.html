@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} receipt {% endblock %}
+{% block title %}Receipt{% endblock %}
 
 {% block navbar %}
 {% include 'user/user_navbar.html' %}
@@ -9,17 +9,68 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'cart/receipt.css' %}">
+<style>
+  body { background-color: beige; }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #fff; }
+  }
+  .card-clean { border: 1px solid #e0e0e0; border-radius: 10px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+  .card-header-lite { background-color: #f8f9fa; font-weight: 600; border-bottom: 1px solid #e0e0e0; }
+  .label { color: #666; }
+  .value { font-weight: 600; }
+  .btn-primary-custom { color: white; background-color: #2c7159a4; }
+  .btn-primary-custom:hover { filter: brightness(0.95); }
+  .table > :not(caption) > * > * { vertical-align: middle; }
+  .text-success { color: #2c7159 !important; }
+  .order-meta { gap: 12px; }
+  .order-meta .value { font-weight: 500; }
+  .order-actions { gap: 12px; }
+  /* Ensure no underline on the buttons (including anchor styled as button), even on hover/focus */
+  .order-actions a,
+  .order-actions a:hover,
+  .order-actions a:focus,
+  .order-actions button,
+  .order-actions button:hover,
+  .order-actions button:focus {
+    margin-top:50px;
+    margin-bottom:50px;
+    text-decoration: none !important;
+    outline: none;
+    box-shadow: none;
+  }
+</style>
 {% endblock %}
 
-{% block contact %}
+{% block content %}
 <div class="container mt-5">
     <div class="text-center mb-4">
-        <h2 class="text-success"> Order Confirmed</h2>
+        <h2 class="text-success">Order Confirmed</h2>
         <p class="lead">Order ID: <strong>#{{ order.id }}</strong></p>
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-9">
+            <div class="card-clean mb-4">
+                <div class="card-header-lite p-3">Summary</div>
+                <div class="p-3">
+                    <div class="row g-3 order-meta">
+                        <div class="col-md-4">
+                            <div class="label">Order Date</div>
+                            <div class="value">{{ order.created_at|date:"M d, Y H:i" }}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="label">Payment Method</div>
+                            <div class="value">{{ order.get_payment_method_display }}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="label">Status</div>
+                            <div class="value">{{ order.get_status_display }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <table class="table table-bordered text-center">
                 <thead class="table-light">
                     <tr>
@@ -30,12 +81,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in order.items.all %}
+                    {% for item in order.products %}
                     <tr>
-                        <td>{{ item.product.name }}</td>
-                        <td>${{ item.price }}</td>
+                        <td>{{ item.product_name }}</td>
+                        <td>${{ item.price_per_unit }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>${{ item.total_price }}</td>
+                        <td>${{ item.order_price }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,11 +98,10 @@
                 </tfoot>
             </table>
 
-            <div class="text-center mt-4">
-                <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
-                <a href="{% url 'my_orders' %}" class="btn btn-outline-secondary">My Orders</a>
+            <div class="d-flex justify-content-center order-actions mt-4 no-print">
+                <button type="button" class="btn btn-primary-custom" onclick="window.print()">Print Receipt</button>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">Go to Home</a>
             </div>
-
         </div>
     </div>
 </div>

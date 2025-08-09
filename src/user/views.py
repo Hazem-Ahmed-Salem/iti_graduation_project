@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -144,6 +145,9 @@ def add_address_view(request):
         form = AddressForm(request.POST)
         if form.is_valid():
             form.save(user=request.user)
+            next_url = request.POST.get('next') or request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('profile')
         else:
             return render(request, 'user/add_address.html', {'form': form, 'errors': form.errors})

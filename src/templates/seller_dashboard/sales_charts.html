@@ -20,13 +20,12 @@
     <!-- Chart.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Chart Setup -->
     <script>
         fetch("{% url 'sales_stats' %}")
             .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.date);
-                const salesData = data.map(item => item.sales);
+            .then(({ success }) => {
+                const labels = success.map(item => item.date);
+                const salesData = success.map(item => item.sales);
 
                 const ctx = document.getElementById('salesChart').getContext('2d');
                 new Chart(ctx, {

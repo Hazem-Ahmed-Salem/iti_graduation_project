@@ -30,9 +30,11 @@
         # }
 
 from django import forms
-from products.models import Product
+from products.models import Product, Stock
 
 class AddProductForm(forms.ModelForm):
+    quantity = forms.IntegerField(min_value=0, required=True, label="Quantity")
+
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'image']
@@ -40,10 +42,29 @@ class AddProductForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 4}),
         }
 
+    def save(self, seller=None, commit=True):
+        product = super().save(commit=False)
+        if seller is not None:
+            product.seller = seller
+        if commit:
+            product.save()
+            Stock.objects.create(product=product, quantity=self.cleaned_data['quantity'])
+        return product
+
 class EditProductForm(forms.ModelForm):
+    quantity = forms.IntegerField(min_value=0, required=False, label="Add Quantity")
+
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'image']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
         }
+
+    def save(self, commit=True):
+        product = super().save(commit=commit)
+        quantity = self.cleaned_data.get('quantity')
+        if quantity:
+            # Append to stock as an additional entry
+            Stock.objects.create(product=product, quantity=quantity)
+        return product

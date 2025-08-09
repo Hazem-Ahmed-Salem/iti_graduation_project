@@ -36,6 +36,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name','user_role']
     
+    @property
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "is_active": self.is_active,
+            "is_staff": self.is_staff,
+            "date_joined": self.date_joined.isoformat() if self.date_joined else None,
+            "user_role": self.user_role,
+        }
+    
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
     
