@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from products.models import Product
 from .models import CartItem
@@ -63,11 +64,18 @@ def add_to_cart(request):
     })
 
 def remove_from_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    if str(product_id) in cart:
-        del cart[str(product_id)]
-    request.session['cart'] = cart
-    return redirect ('cart_detail')
+    
+    cart_item = get_object_or_404(
+        CartItem,
+        customer=request.user,
+        product_id=product_id
+    )
+
+    
+    cart_item.delete()
+
+    
+    return redirect('cart_detail')
 
 
 @login_required
