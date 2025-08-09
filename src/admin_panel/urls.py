@@ -16,6 +16,7 @@ urlpatterns = [
     path('Cancelled/', views.Cancelled,name="Cancelled"),
     path('Done/', views.Done,name="Done"),
     path("Delete_Order/<int:order_id>/",views.Delete_Order,name="Delete_Order"),
+    #
 
 ]
 
