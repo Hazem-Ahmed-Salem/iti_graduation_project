@@ -1,160 +1,57 @@
-{% load static%}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cancelled orders</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icons=grid_view,person_outline,mail_outline,logout,order_approve" />
-    <link rel="stylesheet" href="{% static 'css/admin_panel_css/navbar_style.css' %}">  
-    <link rel="stylesheet" href="{% static 'css/admin_panel_css/orders_style.css' %}">  
-
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-
-    <style>
+{% extends 'admin_panel/orders_base.html' %}
    
-    </style>
-</head>
 
-
-<body>
- <!-- total container-->
- <div class="container">
-
-  
-
-   {% include 'admin_panel_templates/navbar.html' %}
-
-  
-
-
-    
-     <!-- main section -->
-      
-     <main>
-
-        <div class="total">
-
-         <div class="pages">
-        <a  class="a"  href="{% url 'Orders' %}" id="ALL orders">ALL orders</a>
-        </div>
-     
-
-        <div class="pages">
-            <a  class="a"  href="{% url 'Done' %}" id="Done orders">Done orders</a>
-            </div>
-
-
-        <div class="pages">
-        <a  class="a"  href="" id="cancelled orders"> <strike>cancelled orders</strike></a>
-          </div>
-
-        </div>
-         </table>
-       
-        <div class="Big_Div_Table">
-
-
-          <table class="table">
-
-            <!--first row-->
-
-            <tr>
-
-              <th>Name</th>
-
-              <th>Image</th>
-
-              <th>Category</th>
-
-              <th>Customer_ID</th>
-
-              <th>Address</th>
-
-              <th>Quantity</th>
-
-              <th>Payment</th>
-
-            </tr>
-
+            {% block content2 %}
           <!-- second row-->
 
           {% for order in OrdersList%}
-
-          {% if order.cancelled == True %}
-        
-          
+          {% if order.status == "cancelled" %}
             <tr  style="text-decoration: line-through 3px; color: #000000; "  >
 
-              <td>{{order.name}}</td>
+              <td>{{order.id}}</td>
+
+              <td>{{order.buyer}}</td>
               
-
-              <td>
-                <img src="{{order.image}}"></td>
-
-              <td>{{order.category}}</td>
-
-              <td>#{{order.customer_ID}}</td>
-
-              <td>{{order.address}}</td>
-
-              <td>{{order.quantity}}</td>
-
-
-
-              <td >
-              
-                  <div class="payment_class">
-                  {% if order.payment == "vodafone cash" %}
-                       <img class="payment_images"  src="{% static 'images/vc.png' %}" >
-
-                  {% elif order.payment == "visa"  %}
-
-                      <img class="payment_images"  src="{% static 'images/visa.png' %}" >
-
-                  {% elif order.payment == "paypal"  %}
-
-                    <img class="payment_images"  src="{% static 'images/paypal.png' %}" >
-
-                  {% elif order.payment == "Ebay"  %}
-
-                  <img class="payment_images"  src="{% static 'images/ebay.png' %}" >
-
-                  
-                  {% endif %}
-                  {{order.payment}}
-                  
-                  </div>
-
-                
-              </td>
 
               <td>
                 
                 <ol>
-                {% for element in order.products %}
-                
-                  <li>
-                    <img src="{{element.image}}">
-                    
-                  </li>
-                {% endfor %}
-                </ol>
-              </td>
-
-
-              <td>
-                
-                <ol>
-                {% for element in order.products %}
-                
-                  <li>
-                    {{element.discount_price}}
-                  </li>
-                {% endfor %}
-                </ol>
-                <!-- <div>Total_price :order.total_price </div> -->
+                  {% for element in order.products %}
+                  
+                    <li>
+                      {{element.product_name}}
+                    </li>
+                  {% endfor %}
+                  </ol>
+                </td>
+  
+                <td>
+                  
+                  <ol>
+                  {% for element in order.products %}
+                  
+                    <li>
+                      <img src="{{element.image}}">
+                      
+                    </li>
+                  {% endfor %}
+                  </ol>
+                </td>
+  
+  
+                <td>
+                  
+                  <ol>
+                  {% for element in order.products %}
+                  
+                    <li>
+                      {{element.price_per_unit}}
+                    </li>
+                  {% endfor %}
+                  
+                  </ol>
+                  
+                  <div>Total_price :{{order.total_price}} </div> 
                 
                  
            
@@ -181,5 +78,3 @@
             {% endfor %}
 
             {% endblock content2 %}
-
-<!--- Here -->

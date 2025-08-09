@@ -9,26 +9,21 @@
 
 <div class="slider-container">
   <div class="slider-track" id="slider-track">
-    <img src="{% static 'products/img/logo.jpeg' %}" alt="">
+    <img src="{% static 'products/img/logo.png' %}" alt="">
     <img src="{% static 'products/img/1.jpg' %}" alt="">
     <img src="{% static 'products/img/2.jpeg' %}" alt="">
-    <img src="{% static 'products/img/3.jpeg' %}" alt="">
+    <img src="{% static 'products/img/12.jpeg' %}" alt="">
     <img src="{% static 'products/img/10.jpeg' %}" alt="">
-    <img src="{% static 'products/img/4.jpg' %}" alt="">
+    <img src="{% static 'products/img/11.jpeg' %}" alt="">
     <img src="{% static 'products/img/6.jpg' %}" alt="">
     <img src="{% static 'products/img/7.jpeg' %}" alt="">
-     <img src="{% static 'products/img/9.jpeg' %}" alt="">
-    
-    
-    <img src="{% static 'products/img/logo.jpeg' %}" alt="">
-    <img src="{% static 'products/img/1.jpg' %}" alt="">
-    <img src="{% static 'products/img/2.jpeg' %}" alt="">
-    <img src="{% static 'products/img/3.jpeg' %}" alt="">
-    <img src="{% static 'products/img/10.jpeg' %}" alt="">
-    <img src="{% static 'products/img/4.jpg' %}" alt="">
-    <img src="{% static 'products/img/6.jpg' %}" alt="">
-    <img src="{% static 'products/img/7.jpeg' %}" alt="">
-    <img src="{% static 'products/img/9.jpeg' %}" alt="">
+    <img src="{% static 'products/img/13.jpeg' %}" alt="">
+    <img src="{% static 'products/img/14.jpeg' %}" alt="">
+    <img src="{% static 'products/img/15.jpeg' %}" alt="">
+    <img src="{% static 'products/img/16.jpeg' %}" alt="">
+    <img src="{% static 'products/img/17.jpeg' %}" alt="">
+    <img src="{% static 'products/img/18.jpeg' %}" alt="">
+  
   </div>
 </div>
 
@@ -42,7 +37,7 @@
 
   <div class="row g-4">
     {% for category in categories %}
-      <div class="card product-card col-6 col-sm-4 col-md-3 col-lg-2">
+      <div class="card product-card m-4 col-6 col-sm-4 col-md-3 col-lg-2">
         <a href="{% url 'category_products' category.pk %}" class="text-decoration-none">
           <div class="card border-0 shadow-sm h-100 category-card transition" style="transition: box-shadow 0.3s;">
             <div class="bg-light d-flex justify-content-center align-items-center" style="height: 120px;">
@@ -110,7 +105,7 @@
   display: flex;
   gap: 20px;
   width: max-content;
-  animation: scroll 50s linear infinite;
+  animation: scroll 40s linear infinite;
 }
 
 .slider-track img {

@@ -34,7 +34,7 @@ from products.models import Product, Stock
 
 class AddProductForm(forms.ModelForm):
     quantity = forms.IntegerField(min_value=0, required=True, label="Quantity")
-
+    price = forms.FloatField(min_value=1)
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'image']
@@ -53,7 +53,7 @@ class AddProductForm(forms.ModelForm):
 
 class EditProductForm(forms.ModelForm):
     quantity = forms.IntegerField(min_value=0, required=False, label="Add Quantity")
-
+    price = forms.FloatField(min_value=1)
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'image']

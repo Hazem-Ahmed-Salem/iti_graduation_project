@@ -17,7 +17,7 @@
                 {% for element in order.products %}
                 
                   <li>
-                    {{element.name}}
+                    {{element.product_name}}
                   </li>
                 {% endfor %}
                 </ol>
@@ -43,12 +43,13 @@
                 {% for element in order.products %}
                 
                   <li>
-                    {{element.discount_price}}
+                    {{element.price_per_unit}}
                   </li>
                 {% endfor %}
+                
                 </ol>
-
-                <!-- <div>Total_price :order.total_price </div> -->
+                
+                <div>Total_price :{{order.total_price}} </div> 
                 
                  
            

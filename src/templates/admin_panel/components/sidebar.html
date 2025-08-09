@@ -30,8 +30,8 @@
     </div>
 
 
-    <div class="row{% if request.resolver_match.url_name == 'orders' %}-active{% endif %}">
-      <a href="#">
+    <div class="row{% if request.resolver_match.url_name == 'All_Orders' %}-active{% endif %}">
+      <a href="{% url 'All_Orders' %}">
         <span class="material-symbols-outlined">shopping_cart</span>
         <h3>Orders</h3>
       </a>

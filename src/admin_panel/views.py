@@ -120,28 +120,29 @@ def edit_product(request, pk):
 
 
 
-
+@admin_required
 def All_Orders(request):
      Orders=Order.objects.all()
 
      paginator = Paginator(Orders,4) 
      page_number = request.GET.get('page')
      OrdersList = paginator.get_page(page_number)
+     print(OrdersList)
 
     
-     return render(request,"admin_panel/all orders.html",{"OrdersList":OrdersList})
+     return render(request,"admin_panel/all_orders.html",{"OrdersList":OrdersList})
 
 
 
 
-
+@admin_required
 def Cancelled(request):
      OrdersList=Order.objects.all()
 
 
      return render(request,"admin_panel/cancelled.html",{"OrdersList":OrdersList})
 
-
+@admin_required
 def Done(request):
      Orders=Order.objects.all()
      paginator = Paginator(Orders,4) 
@@ -152,8 +153,7 @@ def Done(request):
      return render(request,"admin_panel/done orders.html",{"OrdersList":OrdersList})
 
 
-from django.shortcuts import get_object_or_404, redirect
-
+@admin_required
 def Delete_Order(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     

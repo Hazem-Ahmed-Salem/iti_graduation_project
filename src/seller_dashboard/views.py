@@ -4,6 +4,7 @@ from orders.models import Order
 from orders.models import Sale  
 from .forms import AddProductForm, EditProductForm
 from django.contrib.auth.decorators import login_required
+from user.utils import seller_required
 from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
@@ -15,30 +16,29 @@ from decimal import Decimal
 ###############################################
 
 
-@login_required
-@never_cache
+@seller_required
 def dashboard_view(request):
     seller = request.user
 
-    # عدد المنتجات الخاصة بالبائع
+    
     total_products = Product.objects.filter(seller=seller).count()
 
-    # هات كل مبيعات النظام
+    
     sales = Sale.objects.all()
 
     total_orders = 0
     total_sales = 0
 
-    # IDs بتاعة المنتجات الخاصة بالبائع
+    
     seller_product_ids = set(
         Product.objects.filter(seller=seller).values_list("id", flat=True)
     )
 
-    # مراجعة كل الطلبات
+    
     for sale in sales:
-        sale_has_product = False  # هنتأكد هل فيها منتجات للبائع ولا لأ
+        sale_has_product = False  
 
-        for item in sale.products:  # sale.products = JSONField
+        for item in sale.products:  
             product_id = item.get("id")
             quantity = item.get("quantity", 1)
             price = item.get("price", 0)
@@ -59,8 +59,7 @@ def dashboard_view(request):
     return render(request, "seller_dashboard/dashboard.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 def my_products_view(request):
     seller = request.user
     products = Product.objects.filter(seller=seller)
@@ -70,8 +69,7 @@ def my_products_view(request):
     return render(request, "seller_dashboard/my_products.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 def add_product_view(request):
     if request.method == "POST":
         form = AddProductForm(request.POST, request.FILES)
@@ -85,8 +83,7 @@ def add_product_view(request):
     return render(request, "seller_dashboard/add_product.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 def edit_product_view(request, pk):
     seller = request.user
     product = get_object_or_404(Product, pk=pk, seller=seller)
@@ -103,8 +100,7 @@ def edit_product_view(request, pk):
     return render(request, "seller_dashboard/edit_product.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 def delete_product_view(request, pk):
     seller = request.user
     product = get_object_or_404(Product, pk=pk, seller=seller)
@@ -117,8 +113,7 @@ def delete_product_view(request, pk):
     return render(request, "seller_dashboard/confirm_delete.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 def my_orders_view(request):
     seller = request.user
 
@@ -126,7 +121,6 @@ def my_orders_view(request):
         Product.objects.filter(seller=seller).values_list("id", flat=True)
     )
 
-    # Preload seller products to avoid N+1 queries
     seller_products = {
         p.id: p for p in Product.objects.filter(id__in=seller_product_ids)
     }
@@ -136,7 +130,6 @@ def my_orders_view(request):
 
     for order in orders:
         for item in order.products:
-            # Support both legacy key names ("id") and current ("product_id")
             product_id = item.get("product_id") or item.get("id")
             product = seller_products.get(product_id)
             if product is None:
@@ -144,7 +137,7 @@ def my_orders_view(request):
 
             quantity = int(item.get("quantity", 1))
 
-            # Prefer saved price at checkout time; fall back to current product price
+
             unit_price = item.get("price_per_unit")
             if unit_price is None:
                 try:
@@ -152,7 +145,6 @@ def my_orders_view(request):
                 except Exception:
                     unit_price = 0.0
 
-            # Prefer saved line total if present for accuracy
             saved_line_total = item.get("order_price")
             if saved_line_total is not None:
                 total_price = float(saved_line_total)
@@ -175,8 +167,7 @@ def my_orders_view(request):
     return render(request, "seller_dashboard/orders.html", context)
 
 ###############################################
-@login_required
-@never_cache
+@seller_required
 @api_view(['GET'])
 def sales_stats_view(request):
     seller = request.user

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from cart.models import CartItem
 from .models import Order
 from user.models import Address
@@ -56,6 +57,7 @@ def checkout_view(request):
                 'seller_id': seller ,
                 'product_id': item.product.id,
                 'product_name': item.product.name,
+                'image':item.product.URL_image if item.product.URL_image else item.product.image.url  ,
                 'quantity': item.quantity,
                 'price_per_unit': float(item.price_per_unit),
                 'order_price': float(item.order_price)
@@ -90,8 +92,16 @@ def receipt_view(request, order_id):
         return redirect('user_orders')
     return render(request, 'orders/receipt.html', {'order': order})
 
-
-
+@login_required
+def cancel_order(request,order_id):
+    try:
+        order = Order.objects.get(id=order_id)
+    except  Order.DoesNotExist:
+        return HttpResponse("<h1> Order Does not exist </h1>")
+    
+    order.status = 'cancelled'
+    order.save()
+    return redirect('user_orders')
 
 
 # # Create your views here.
