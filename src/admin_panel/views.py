@@ -12,7 +12,7 @@ from .models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from user.utils import admin_required
-
+from orders.models import Order
 
    
 @admin_required
@@ -119,97 +119,44 @@ def edit_product(request, pk):
     return render(request, 'admin_panel/product_form.html', {'product_form': product_form, 'stock_form': stock_form})
 
 
-# def Dashboard(request):
-#     return render(request,"admin_panel_templates/dashboard.html")
 
 
-# def display_Electronic_products(request):
-#     file_path = os.path.join(settings.STATIC_ROOT, 'dataset/Electronic products.py')
-    
-#     spec = importlib.util.spec_from_file_location("products_module", file_path)
-#     products_module = importlib.util.module_from_spec(spec)
-#     spec.loader.exec_module(products_module)
-    
-#     products = products_module.products
-    
-#     return render(request, 'admin_panel_templates/products.html', {'products': products})
+def All_Orders(request):
+     Orders=Order.objects.all()
 
-
-# def display_Kitchen_products(request):
-#     file_path = os.path.join(settings.STATIC_ROOT, 'dataset/Kitchen products.py')
-    
-#     spec = importlib.util.spec_from_file_location("products_module", file_path)
-#     products_module = importlib.util.module_from_spec(spec)
-#     spec.loader.exec_module(products_module)
-    
-#     products = products_module.products
-    
-#     return render(request, 'admin_panel_templates/products.html', {'products': products})
-
-
-
-
-
-# def display_Beauty_products(request):
-#     file_path = os.path.join(settings.STATIC_ROOT, 'dataset/Beauty products.py')
-    
-#     spec = importlib.util.spec_from_file_location("products_module", file_path)
-#     products_module = importlib.util.module_from_spec(spec)
-#     spec.loader.exec_module(products_module)
-    
-#     products = products_module.products
-    
-#     return render(request, 'admin_panel_templates/products.html', {'products': products})
-
-
-
-
-# def display_Makeup_products(request):
-#     file_path = os.path.join(settings.STATIC_ROOT, 'dataset/Makeup products.py')
-    
-#     spec = importlib.util.spec_from_file_location("products_module", file_path)
-#     products_module = importlib.util.module_from_spec(spec)
-#     spec.loader.exec_module(products_module)
-    
-#     products = products_module.products
-    
-#     return render(request, 'admin_panel_templates/products.html', {'products': products})
-
-
-
-
-
-# def Orders(request):
-#     Orders=order.objects.all()
-
-#     paginator = Paginator(Orders,4) 
-#     page_number = request.GET.get('page')
-#     OrdersList = paginator.get_page(page_number)
+     paginator = Paginator(Orders,4) 
+     page_number = request.GET.get('page')
+     OrdersList = paginator.get_page(page_number)
 
     
-#     return render(request,"admin_panel_templates/orders.html",{"OrdersList":OrdersList})
-
-
-
-# def Recommendation(request):
-#     return render(request,"admin_panel_templates/recommendation.html")
+     return render(request,"admin_panel/all orders.html",{"OrdersList":OrdersList})
 
 
 
 
-# def Cancelled(request):
-#     OrdersList=order.objects.all()
+
+def Cancelled(request):
+     OrdersList=Order.objects.all()
 
 
-#     return render(request,"admin_panel_templates/cancelled.html",{"OrdersList":OrdersList})
+     return render(request,"admin_panel/cancelled.html",{"OrdersList":OrdersList})
 
 
-# def Done(request):
-#     Orders=order.objects.all()
-#     paginator = Paginator(Orders,4) 
-#     page_number = request.GET.get('page')
-#     OrdersList = paginator.get_page(page_number)
+def Done(request):
+     Orders=Order.objects.all()
+     paginator = Paginator(Orders,4) 
+     page_number = request.GET.get('page')
+     OrdersList = paginator.get_page(page_number)
 
 
-#     return render(request,"admin_panel_templates/done orders.html",{"OrdersList":OrdersList})
+     return render(request,"admin_panel/done orders.html",{"OrdersList":OrdersList})
 
+
+from django.shortcuts import get_object_or_404, redirect
+
+def Delete_Order(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    
+    order.delete()
+    
+    return redirect("All_Orders")
