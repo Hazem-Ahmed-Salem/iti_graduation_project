@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse
 from django.contrib.auth import login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -23,8 +24,8 @@ def register_view(request):
             return redirect('next_register')
         else:
             error_message = form.errors.as_text()
-            return render(request, 'user/register.html', {'form': RegisterationForm(), "errors": error_message})
-    return render(request, 'user/register.html', {'form': RegisterationForm()})
+            return render(request, 'user/Register.html', {'form': RegisterationForm(), "errors": error_message})
+    return render(request, 'user/Register.html', {'form': RegisterationForm()})
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -44,10 +45,10 @@ def login_view(request):
                 else:
                     return redirect('home')
             else:
-                return render(request, 'user/login.html', {'form': form, 'errors': 'Invalid credentials'})
+                return render(request, 'user/Login.html', {'form': form, 'errors': 'Invalid credentials'})
     else:
         form = LoginForm()
-    return render(request, 'user/login.html', {'form': form})
+    return render(request, 'user/Login.html', {'form': form})
 
 @login_required
 def logout_view(request):
@@ -144,6 +145,9 @@ def add_address_view(request):
         form = AddressForm(request.POST)
         if form.is_valid():
             form.save(user=request.user)
+            next_url = request.POST.get('next') or request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('profile')
         else:
             return render(request, 'user/add_address.html', {'form': form, 'errors': form.errors})

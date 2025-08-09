@@ -52,7 +52,7 @@
          <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
 
           <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
-            <img src="{{ product.URL_image }}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
+            <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
           </div>
 
          

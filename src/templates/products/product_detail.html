@@ -16,7 +16,7 @@
     
     <div class="col-md-6">
       <div class="bg-light d-flex justify-content-center align-items-center" style="height: 400px;">
-        <img src="{{ product.URL_image }}"
+        <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}"
              alt="{{ product.name }}"
              class="img-fluid"
              style="max-height: 380px; object-fit: contain;" />

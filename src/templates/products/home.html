@@ -42,7 +42,7 @@
 
   <div class="row g-4">
     {% for category in categories %}
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+      <div class="card product-card col-6 col-sm-4 col-md-3 col-lg-2">
         <a href="{% url 'category_products' category.pk %}" class="text-decoration-none">
           <div class="card border-0 shadow-sm h-100 category-card transition" style="transition: box-shadow 0.3s;">
             <div class="bg-light d-flex justify-content-center align-items-center" style="height: 120px;">
@@ -76,7 +76,7 @@
          <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
 
           <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
-            <img src="{{ product.URL_image }}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
+            <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
           </div>
 
          

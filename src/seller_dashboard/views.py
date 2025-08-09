@@ -1,13 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-from django.db.models import Sum
-import datetime
 from products.models import Product
 from orders.models import Order
 from orders.models import Sale  
 from .forms import AddProductForm, EditProductForm
-from django.http import JsonResponse
-import datetime
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
@@ -15,6 +10,7 @@ from collections import defaultdict
 from django.views.decorators.cache import never_cache
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from decimal import Decimal
 
 ###############################################
 
@@ -80,9 +76,7 @@ def add_product_view(request):
     if request.method == "POST":
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.seller = request.user
-            product.save()
+            form.save(seller=request.user)
             return redirect("my_products")
     else:
         form = AddProductForm()
@@ -128,53 +122,77 @@ def delete_product_view(request, pk):
 def my_orders_view(request):
     seller = request.user
 
-    # جيب IDs بتاعة منتجات البائع الحالي
     seller_product_ids = set(
         Product.objects.filter(seller=seller).values_list("id", flat=True)
     )
 
+    # Preload seller products to avoid N+1 queries
+    seller_products = {
+        p.id: p for p in Product.objects.filter(id__in=seller_product_ids)
+    }
+
     order_items = []
-    orders =list (Order.objects.all())
-    # لف على كل الطلبات الموجودة في Sale
-    for sale in orders:
-        for item in sale.products:  # sale.products is JSON list
-            product_id = item.get("id")
-            if product_id in seller_product_ids:
-                product = Product.objects.get(id=product_id)
-                order_items.append(
-                    {
-                        "product": product,
-                        "quantity": item.get("quantity", 1),
-                        "price": product.price,
-                        "total_price":float(product.price) * int(item.get("quantity", 1)),
-                        "date":sale.created_at
-                    }
-                )
+    orders = Order.objects.all().order_by("-created_at")
+
+    for order in orders:
+        for item in order.products:
+            # Support both legacy key names ("id") and current ("product_id")
+            product_id = item.get("product_id") or item.get("id")
+            product = seller_products.get(product_id)
+            if product is None:
+                continue
+
+            quantity = int(item.get("quantity", 1))
+
+            # Prefer saved price at checkout time; fall back to current product price
+            unit_price = item.get("price_per_unit")
+            if unit_price is None:
+                try:
+                    unit_price = float(product.price)
+                except Exception:
+                    unit_price = 0.0
+
+            # Prefer saved line total if present for accuracy
+            saved_line_total = item.get("order_price")
+            if saved_line_total is not None:
+                total_price = float(saved_line_total)
+            else:
+                total_price = float(unit_price) * quantity
+
+            order_items.append(
+                {
+                    "product": product,
+                    "quantity": quantity,
+                    "price": unit_price,
+                    "total_price": total_price,
+                    "date": order.created_at,
+                    "order_id": order.id,
+                }
+            )
 
     context = {"order_items": order_items}
 
     return render(request, "seller_dashboard/orders.html", context)
 
 ###############################################
-@api_view (['GET'])
-
-
+@login_required
+@never_cache
+@api_view(['GET'])
 def sales_stats_view(request):
     seller = request.user
 
-    # المنتجات الخاصة بالبائع
     seller_product_ids = set(
         Product.objects.filter(seller=seller).values_list("id", flat=True)
     )
 
-    # حدد تاريخ اليوم وابدأ تحسب 7 أيام ورا
+
     today = timezone.now().date()
     seven_days_ago = today - timedelta(days=6)
 
-    # dict لجمع المبيعات لكل يوم
+
     sales_per_day = defaultdict(float)
 
-    # هات الطلبات في آخر 7 أيام
+
     sales = Sale.objects.filter(
         date__date__range=(seven_days_ago, today)
     ).select_related("order")
@@ -188,14 +206,12 @@ def sales_stats_view(request):
                 price = item.get("price", 0)
                 sales_per_day[day] += quantity * price
 
-    # حضر البيانات على شكل قائمة
+  
     result = []
     for i in range(7):
         day = (seven_days_ago + timedelta(days=i)).strftime("%Y-%m-%d")
         result.append({"date": day, "sales": round(sales_per_day.get(day, 0), 2)})
 
-    return Response({'success':result}, status=200)
+    return Response({'success': result}, status=200)
 
-def statistics (request):
-    return render(request,'seller_dashboard/sales_charts.html')
 ###############################################

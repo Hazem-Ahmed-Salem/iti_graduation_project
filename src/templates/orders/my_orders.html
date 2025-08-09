@@ -1,52 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} my_orders {% endblock %}
+{% block title %}My Orders{% endblock %}
 
 {% block navbar %}
-{% include 'user/user_navbar.html' %}
+{% include 'products/components/detail_navbar.html' %}
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'cart/my_orders.css' %}">
+<style>
+  body{ background-color: beige; }
+  .white{ background-color: #f8f9fa; color:black; border: 1px solid #e0e0e0; }
+  .cart-header { display:flex; font-weight:600; border-bottom:2px solid #ddd; padding-bottom:10px; margin-bottom:15px; gap:20px; }
+  .cart-header span { text-align:center; }
+  .cart-item-card { display:flex; align-items:center; gap:20px; padding:15px; border:1px solid #e0e0e0; border-radius:10px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
+  .order-id { width:120px; font-weight:600; text-align:center; }
+  .order-date { flex:1; color:#333; }
+  .order-total, .order-status { width:140px; text-align:center; font-weight:600; color:#222; }
+  .view-btn { white-space:nowrap; }
+</style>
 {% endblock %}
 
-{% block contact %}
-<div class="container">
-    <h2 class="mb-4">My Orders</h2>
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">My Orders</h2>
 
-    {% if orders %}
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Payment</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in orders %}
-                <tr>
-                    <td>#{{ order.id }}</td>
-                    <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
-                    <td>${{ order.total_price }}</td>
-                    <td>{{ order.payment_method }}</td>
-                    <td>
-                        <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-primary">View</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+  {% if orders %}
+    <div class="cart-header">
+      <span class="order-id">Order #</span>
+      <span class="flex-fill text-start">Date</span>
+      <span class="order-total">Total</span>
+      <span class="order-status">Status</span>
+      <span style="width:100px;">Action</span>
     </div>
-    {% else %}
-    <div class="alert alert-info">
-        You have no orders yet.
+
+    <div class="d-flex flex-column gap-3">
+      {% for order in orders %}
+      <div class="cart-item-card">
+        <span class="order-id">#{{ order.id }}</span>
+        <span class="order-date">{{ order.created_at|date:"Y-m-d H:i" }}</span>
+        <span class="order-total">${{ order.total_price }}</span>
+        <span class="order-status">{{ order.status|title }}</span>
+        <a href="{% url 'order_detail' order.id %}" class="btn ms-auto view-btn" style="color:white; background-color:#2c7159a4;">View</a>
+      </div>
+      {% endfor %}
     </div>
-    {% endif %}
+  {% else %}
+    <div class="white alert alert-info text-center">You have no orders yet.</div>
+  {% endif %}
 </div>
-
 {% endblock %}

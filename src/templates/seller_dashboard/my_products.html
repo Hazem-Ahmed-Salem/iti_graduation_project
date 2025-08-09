@@ -1,43 +1,64 @@
 {% extends 'seller_dashboard/components/seller_base.html' %}
 {% load static %}
+{% block title %}My Products{% endblock %}
 {% block content %}
+    <h1>My Products</h1>
+    <hr>
+    <br>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Seller's Products{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'seller_dashboard/css/my_products.css' %}">
-</head>
-<body>
+    <div class="page">
+        <div>
+            <a href="{% url 'add_product' %}" class="add-product-btn">
+                <i class="fas fa-plus"></i> Add New Product
+            </a>
+        </div>
 
-    <div class="dashboard-container">
-        <h1>Seller's Products</h1>
-                <p class="add-link">
-            <a href="{% url 'add_product' %}">➕ Add a New Product</a>
-        </p>
         {% if products %}
-            <ul class="product-list">
-                {% for product in products %}
-                    <li class="product-item">
-                        <span class="product-name">{{ product.id }}</span> -
-                        <span class="product-name">{{ product.name }}</span> -
-                        <span class="product-price">{{ product.price }} E.P</span>
-                        <span class="product-actions">
-                            <a href="{% url 'edit_product' product.pk %}">Edit</a> 
-                            <a href="{% url 'delete_product' product.pk %}">Delete</a> 
-                        </span>
-                    </li>
-                {% endfor %}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td data-label="ID">{{ product.id }}</td>
+                        <td data-label="Photo">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;" />
+                            {% elif product.URL_image %}
+                                <img src="{{ product.URL_image }}" alt="{{ product.name }}" width="50" height="50" style="object-fit: cover; border-radius: 6px;" />
+                            {% else %}
+                                <span>No Image</span>
+                            {% endif %}
+                        </td>
+                        <td data-label="Name">{{ product.name }}</td>
+                        <td data-label="Price">{{ product.price }} E.P</td>
+                        <td data-label="Stock">
+                            {% if product.get_stock_status %}
+                                In Stock ({{ product.get_stock_quantity }})
+                            {% else %}
+                                Out of Stock
+                            {% endif %}
+                        </td>
+                        <td data-label="Created">{{ product.created_at|date:"Y-m-d" }}</td>
+                        <td data-label="Actions">
+                            <a href="{% url 'edit_product' product.pk %}" class="btn btn-edit">Edit</a>
+                            <a href="{% url 'delete_product' product.pk %}" class="btn btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% else %}
-            <p class="empty-msg">You Haven't Added Any Products Yet.</p>
+            <p>You Haven't Added Any Products Yet.</p>
         {% endif %}
-
-
     </div>
-
-</body>
-</html>
-
 {% endblock %}

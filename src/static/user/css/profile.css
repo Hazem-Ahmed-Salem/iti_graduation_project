@@ -1,3 +1,6 @@
+body {
+  background-color: beige;
+}
 .my-btn {
   display: inline-block;
   padding: 8px 16px;

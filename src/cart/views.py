@@ -72,7 +72,6 @@ def remove_from_cart(request, product_id):
 
 @login_required
 def cart_detail(request):
-    
     cart_items = CartItem.objects.filter(customer=request.user)
 
     for item in cart_items:
@@ -89,6 +88,17 @@ def cart_detail(request):
         'total': total,
     })
 
+
+
+@login_required
+def remove_cart_item(request, item_id):
+    try:
+        cart_item = CartItem.objects.get(id=item_id, customer=request.user)
+    except CartItem.DoesNotExist:
+        return redirect('shopping_cart')
+
+    cart_item.delete()
+    return redirect('shopping_cart')
 
 
 

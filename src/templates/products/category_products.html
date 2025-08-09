@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ category.name }} Products{% endblock %}
 
 {% block content %}
@@ -8,7 +9,7 @@
   <div class="row">
     {% for product in products %}
       <div class="col-md-3 mb-4">
-        <div class="card border-0 shadow-sm h-100">
+        <div class="card product-card border-0 shadow-sm h-100">
           <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark d-block">
             <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
               <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
@@ -19,8 +20,8 @@
               <p class="text-dark fw-semibold mb-2">${{ product.price }}</p>
           </a>
 
-              <a href="{% url 'product_detail' product.pk %}" class="my-btn">View Details</a>
-              <a href="{% url 'toggle_wishlist' product.id %}" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center" style="height: 38px; min-width: 38px;">
+              <button id="add-to-cart" name="{% url 'add_to_cart'%}" class="my-btn add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
+              <a id="wishlist" name="{% url 'toggle_wishlist' product.id %}" href="#" class="my-btn me-2 px-2 d-inline-flex align-items-center justify-content-center " style="height: 38px; min-width: 38px;">
                 <i class="bi {% if product in request.user.wishlist_products.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
               </a>
             </div>
@@ -29,4 +30,9 @@
     {% endfor %}
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'products/js/product_list.js' %}" defer></script>
+
 {% endblock %}
