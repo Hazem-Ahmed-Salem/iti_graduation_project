@@ -25,6 +25,12 @@
 .navbar .navbar-text {
   color: white !important;
 }
+.navbar a:hover,
+.navbar .nav-link:hover,
+.navbar i:hover {
+  color: beige !important;
+}
+
 
 </style>
 
@@ -52,6 +58,9 @@
         
         
         {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-color" href="{% url 'user_orders' %}">My Orders</a>
+        </li>
           {% if user.is_superuser and user.user_role == 'admin' %}
         <li class="nav-item">
           <a class="nav-link text-color" href="{% url 'users' %}">Admin Pannel</a>

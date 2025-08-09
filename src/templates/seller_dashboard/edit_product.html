@@ -1,32 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block style %}
+<style>
+  body{
+    background-color:beige;
+  }
+  .form-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .form-header {
+    font-weight: 600;
+  }
+  .product-form p { margin-bottom: 15px; }
+  .product-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  .product-form input,
+  .product-form textarea,
+  .product-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  .action-btn {
+    color: #fff;
+    background-color: #2c7159a4;
+    border: none;
+  }
+  .action-btn:hover { background-color: #074932; color:#fff; }
+</style>
+{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Edit The Product{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{% static 'seller_dashboard/css/edit_product.css' %}"
-    />
-  </head>
-  <body>
-    <div class="dashboard-container">
-      <h1>Edit The Product</h1>
+<div class="container py-5">
+  <h2 class="mb-4">Edit Product</h2>
 
+  <div class="card form-card">
+    <div class="card-body">
       <form class="product-form" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{ form.as_p }}
-        <button class="submit-button" type="submit">Update</button>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-flex gap-2 mt-3">
+          <button type="submit" class="btn action-btn">Update</button>
+          <a href="{% url 'my_products' %}" class="btn btn-outline-secondary">Back to my products</a>
+        </div>
       </form>
-
-      <p class="back-link">
-        <a href="{% url 'my_products' %}"
-          ><button class="submit-button">Back to my products</button></a
-        >
-      </p>
     </div>
-  </body>
-</html>
-
+  </div>
+</div>
 {% endblock %}
