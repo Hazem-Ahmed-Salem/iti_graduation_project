@@ -27,7 +27,18 @@ class Order(models.Model):
     status = models.CharField(max_length=255,choices=Status_choices,default='confirmed')
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE,null=True,default=None)
     payment_method = models.CharField(max_length=255,choices=payment_options,default='cash_on_delivery')
-    total_price = models.DecimalField(max_digits=11, decimal_places=2,default=0)
+
+    """
+    def total_price(self):
+        total=0
+        for product in self.products:
+            if product["discount_price"]:
+                number=product["discount_price"].replace("₹",'').replace(',', '')
+                total+=float(number)
+
+        return total
+        """
+
 
     def __str__(self):
         return f"{self.buyer}"

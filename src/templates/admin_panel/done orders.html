@@ -145,40 +145,53 @@
                 
               </td>
 
+              <td>
+                
+                <ol>
+                {% for element in order.products %}
+                
+                  <li>
+                    <img src="{{element.image}}">
+                    
+                  </li>
+                {% endfor %}
+                </ol>
+              </td>
+
+              <td>
+                
+                <ol>
+                {% for element in order.products %}
+                
+                  
+                    {{element.discount_price}}
+                  </li>
+                {% endfor %}
+                </ol>
+                <!-- <div>Total_price :order.total_price </div> -->
+                
+                 
+           
+              </td>
+
+              <td>#{{order.status}}</td>
+
+              <td>{{order.delivery_address}}</td>
+
+              <td>{{order.payment_method}}</td>
+
+              <td>
+                <form method="POST" action="{% url 'Delete_Order' order.id %}">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Are you sure to Delete this order?')">🗑 Delete</button>
+                </form>
+            </td>
+
+
+
 
             </tr>
-          
-     
-         {% endif %}
 
-        {% endfor %}
-
-          
-
-
-
-
-          
-          </table>
-
-
-          
-
-
-        </div>
-      
-       <div class="footer">
-
-        
-
-        <div class="footer_previous">
-
-            
-
-            {% if OrdersList.has_previous %}
-            
-            <a href="?page=1">«</a>
-            
             {% endif %}
         
         
