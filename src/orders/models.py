@@ -21,7 +21,6 @@ class Order(models.Model):
         ("visa","visa")
     ]
 
-    id = models.AutoField(primary_key=True) 
 
     buyer = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.JSONField(default=list)
@@ -32,7 +31,7 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE,null=True,default=None)
     payment_method = models.CharField(max_length=255,choices=payment_options,default='cash_on_delivery')
 
-
+    """
     def total_price(self):
         total=0
         for product in self.products:
@@ -41,6 +40,7 @@ class Order(models.Model):
                 total+=float(number)
 
         return total
+        """
 
 
     def __str__(self):
