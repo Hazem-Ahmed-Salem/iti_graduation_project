@@ -193,62 +193,22 @@
             </tr>
 
             {% endif %}
-        
-        
-        </div>
+      
 
+            {% endfor %}
 
-        <div class="footer_previous">
-
-          {% if OrdersList.has_previous %}
-
-          <a href="?page={{ OrdersList.previous_page_number }}" >‹</a>
-         {% endif %}
-        </div>
-       
-
-        
-
-        <div class="footer_next">
-          {% if OrdersList.has_next %}
-
-          <a href="?page={{ OrdersList.next_page_number }}">›</a>
-          {% endif %}
-        
-        
-        </div>
-
-        <div class="footer_next">
-          {% if OrdersList.has_next %}
-          <a href="?page={{ OrdersList.paginator.num_pages }}">»</a>
-          {% endif %}
-        
-        </div>
-
-       
+            {% endblock content2 %}
 
 
 
 
-        </div>
-
-
-    </main>
 
 
 
-    <!-- right section -->
-
-
-  
-    
-
-   
 
 
 
-    <script  src="{% static 'javascript/admin_panel_javascript/orders.js' %} " ></script>
-    <script  src="{% static 'javascript/admin_panel_javascript/change.js' %} " ></script>
 
-</body>
-</html>
+
+
+<!--- Here -->
