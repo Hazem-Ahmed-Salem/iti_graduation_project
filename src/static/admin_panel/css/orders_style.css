@@ -25,20 +25,21 @@
 
 }
 
-.pages:hover{
 
-  background-color: #ffe8e8;
-  color: green;
+.Pages:hover{
+
+  background-color: #3d6859a4 !important;
+  color: white;
 
   
 }
 
-.pages:hover a{
+.Pages:hover a{
 
-  color: green;
+  color: white;
   
 }
-/active pages/
+/* active pages/ */
 
 .activate{
 
@@ -46,13 +47,11 @@
   height: 50px;
   border-radius: 20px;
   background-color: #3d6859a4;
-  color: white;
 
-  color: rgb(255, 255, 255);
 
 }
 
-/big table style/
+/* big table style/ */
 .Big_Table{
 
   width: 1000;
@@ -73,19 +72,13 @@
 .table tr td{
 
   height:20px;
-  font-size: 10px;
+  font-size: 20px;
   
 
 }
 
 
 
-.table tr:hover{
-
-  background-color: #2b845ca4;
-  
-
-}
 
 
 img{
@@ -145,4 +138,22 @@ img{
   display: flex;
   
 
+}
+
+
+.btn-delete {
+  background-color: transparent !important;
+  background-color: #c0392b !important;
+  color: #fff !important;
+  width: 100px;
+  justify-content: center;
+  height: 60px;
+  font-size: 12px;
+ 
+}
+
+
+
+.btn-delete:hover {
+  background-color: #a93226 !important;
 }

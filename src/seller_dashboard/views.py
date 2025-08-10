@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from products.models import Product
 from orders.models import Order
-from orders.models import Sale  
 from .forms import AddProductForm, EditProductForm
 from django.contrib.auth.decorators import login_required
 from user.utils import seller_required
@@ -24,7 +23,7 @@ def dashboard_view(request):
     total_products = Product.objects.filter(seller=seller).count()
 
     
-    sales = Sale.objects.all()
+    orders = Order.objects.filter(status='confirmed')
 
     total_orders = 0
     total_sales = 0
@@ -34,20 +33,37 @@ def dashboard_view(request):
         Product.objects.filter(seller=seller).values_list("id", flat=True)
     )
 
+    seller_products = {p.id: p for p in Product.objects.filter(id__in=seller_product_ids)}
+
     
-    for sale in sales:
-        sale_has_product = False  
+    for order in orders:
+        order_has_product = False
 
-        for item in sale.products:  
-            product_id = item.get("id")
-            quantity = item.get("quantity", 1)
-            price = item.get("price", 0)
+        for item in order.products:
+            product_id = item.get("product_id") or item.get("id")
+            if product_id not in seller_product_ids:
+                continue
 
-            if product_id in seller_product_ids:
-                sale_has_product = True
-                total_sales += quantity * price
+            order_has_product = True
 
-        if sale_has_product:
+            quantity = int(item.get("quantity", 1))
+
+            unit_price = item.get("price_per_unit")
+            if unit_price is None:
+                try:
+                    unit_price = float(seller_products[product_id].price)
+                except Exception:
+                    unit_price = 0.0
+
+            saved_line_total = item.get("order_price")
+            if saved_line_total is not None:
+                line_total = float(saved_line_total)
+            else:
+                line_total = float(unit_price) * quantity
+
+            total_sales += line_total
+
+        if order_has_product:
             total_orders += 1
 
     context = {
@@ -184,18 +200,36 @@ def sales_stats_view(request):
     sales_per_day = defaultdict(float)
 
 
-    sales = Sale.objects.filter(
-        date__date__range=(seven_days_ago, today)
-    ).select_related("order")
+    seller_products = {p.id: p for p in Product.objects.filter(id__in=seller_product_ids)}
 
-    for sale in sales:
-        for item in sale.products:
-            product_id = item.get("id")
-            if product_id in seller_product_ids:
-                day = sale.date.date().strftime("%Y-%m-%d")
-                quantity = item.get("quantity", 1)
-                price = item.get("price", 0)
-                sales_per_day[day] += quantity * price
+    orders = Order.objects.filter(
+        created_at__date__range=(seven_days_ago, today),
+        status='confirmed',
+    )
+
+    for order in orders:
+        for item in order.products:
+            product_id = item.get("product_id") or item.get("id")
+            if product_id not in seller_product_ids:
+                continue
+
+            day = order.created_at.date().strftime("%Y-%m-%d")
+            quantity = int(item.get("quantity", 1))
+
+            unit_price = item.get("price_per_unit")
+            if unit_price is None:
+                try:
+                    unit_price = float(seller_products[product_id].price)
+                except Exception:
+                    unit_price = 0.0
+
+            saved_line_total = item.get("order_price")
+            if saved_line_total is not None:
+                line_total = float(saved_line_total)
+            else:
+                line_total = float(unit_price) * quantity
+
+            sales_per_day[day] += line_total
 
   
     result = []

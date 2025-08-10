@@ -5,6 +5,7 @@ import os
 import sys
 import django
 
+
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(project_path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
@@ -15,8 +16,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-DATASET_DIR = os.path.join("static", "dataset")
-
+DATASET_DIR = os.path.join(project_path,"static", "dataset")
+print(DATASET_DIR)
 
 def parse_price(price_str):
     if not price_str:

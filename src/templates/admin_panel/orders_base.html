@@ -18,15 +18,15 @@
                 <div class="div_of_Pages">
             
                  <div class="Pages">
-                <a class="row{% if request.resolver_match.url_name == 'All_Orders' %} activate{% endif %}"  href="{% url 'All_Orders' %}" id="ALL orders">ALL orders</a>
+                <a class="{% if request.resolver_match.url_name == 'All_Orders' %}activate{% endif %}"  href="{% url 'All_Orders' %}" id="ALL orders">ALL orders</a>
                 </div>
             
                 <div class="Pages">
-                  <a  class="row{% if request.resolver_match.url_name == 'Done' %} activate{% endif %}"  href="{% url 'Done' %}" id="Done orders">Done orders</a>
+                  <a  class="{% if request.resolver_match.url_name == 'Done' %}activate{% endif %}"  href="{% url 'Done' %}" id="Done orders">Done orders</a>
                   </div>
             
                 <div class="Pages">
-                <a  class="row{% if request.resolver_match.url_name == 'Cancelled' %} activate{% endif %}"  href="{% url 'Cancelled' %}" id="cancelled orders"> <strike>cancelled orders</strike></a>
+                <a  class="{% if request.resolver_match.url_name == 'Cancelled' %}activate{% endif %}"  href="{% url 'Cancelled' %}" id="cancelled orders"> <strike>cancelled orders</strike></a>
                   </div>
             
                 </div>

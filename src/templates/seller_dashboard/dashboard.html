@@ -66,12 +66,12 @@ span {
         <div class="stats">
             <p class="stat-item">Total Products: <span>{{ total_products }}</span></p>
             <p class="stat-item">Total Orders: <span>{{ total_orders }}</span></p>
-            <p class="stat-item">Total Sales: <span>{{ total_sales }} E.P</span></p>
+            <p class="stat-item">Total Revenue: <span>{{ total_sales }} E.P</span></p>
         </div>
 
         <div class="charts-grid">
             <div class="chart-card">
-                <h3>Sales (Last 7 Days)</h3>
+                <h3>Revenue (Last 7 Days)</h3>
                 <canvas id="salesChart"></canvas>
             </div>
             <div class="chart-card">
@@ -102,7 +102,7 @@ fetch('{% url "sales_stats" %}')
       data: {
         labels,
         datasets: [{
-          label: 'Total Sales (E.P)',
+          label: 'Revenue (E.P)',
           data: salesData,
           fill: true,
           backgroundColor: accent,
@@ -143,7 +143,12 @@ fetch('{% url "sales_stats" %}')
     },
     options: {
       responsive: true,
-      scales: { y: { beginAtZero: true, precision: 0 } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { precision: 0, stepSize: 1 }
+        }
+      },
       plugins: { legend: { display: false } }
     }
   });

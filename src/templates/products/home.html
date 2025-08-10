@@ -35,23 +35,23 @@
   <p class="text-success fw-bold mb-1">Categories</p>
   <h4 class="fw-bold mb-3">Browse By Category</h4>
 
-  <div class="row g-4">
+  <div class="row row-cols-2 row-cols-md-4 g-4">
     {% for category in categories %}
-      <div class="card product-card m-4 col-6 col-sm-4 col-md-3 col-lg-2">
-        <a href="{% url 'category_products' category.pk %}" class="text-decoration-none">
-          <div class="card border-0 shadow-sm h-100 category-card transition" style="transition: box-shadow 0.3s;">
-            <div class="bg-light d-flex justify-content-center align-items-center" style="height: 120px;">
+      <div class="col">
+        <div class="card product-card border-0 shadow-sm h-100">
+          <a href="{% url 'category_products' category.pk %}" class="text-decoration-none text-dark d-block">
+            <div class="bg-light d-flex justify-content-center align-items-center" style="height: 280px;">
               {% if category.image %}
-                <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-height: 80px; max-width: 70px; object-fit: contain;">
+                <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-height: 240px; object-fit: contain;">
               {% else %}
-                <span class="d-block" style="height: 80px;"></span>
+                <span class="d-block" style="height: 240px;"></span>
               {% endif %}
             </div>
-            <div class="card-body p-2 text-center">
-              <div class="fw-semibold text-dark">{{ category.name }}</div>
+            <div class="card-body text-center">
+              <h5 class="fw-bold mb-2">{{ category.name }}</h5>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     {% endfor %}
   </div>
