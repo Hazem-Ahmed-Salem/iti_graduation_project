@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
 from products.models import Product
 from .models import CartItem
 from django.contrib.auth.decorators import login_required
@@ -10,13 +9,6 @@ from rest_framework.response import Response
 from decimal import Decimal
 
 
-# def add_to_cart(request, product_id):
-#     cart = request.session.get('cart', {})
-#     cart[str(product_id)] = cart.get(str(product_id), 0) + 1
-#     request.session['cart'] = cart
-#     return redirect ('cart_detail')
-
-"""انا الي غيرت و عملت الفانكشان دي عشان تضيف منتج جديد في الكارت"""
 @api_view(["POST"])
 def add_to_cart(request):
     user = request.user if request.user.is_authenticated else None
@@ -63,19 +55,6 @@ def add_to_cart(request):
         'product': product.name,
     })
 
-def remove_from_cart(request, product_id):
-    
-    cart_item = get_object_or_404(
-        CartItem,
-        customer=request.user,
-        product_id=product_id
-    )
-
-    
-    cart_item.delete()
-
-    
-    return redirect('cart_detail')
 
 
 @login_required

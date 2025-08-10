@@ -34,7 +34,7 @@
 
 </style>
 
-<nav class="navbar navbar-expand-lg border-bottom text-white sticky-top" style="background-color:#074932;">
+ <nav class="navbar navbar-expand-lg navbar-dark border-bottom sticky-top" style="background-color:#074932;">
 
 
 
@@ -46,51 +46,53 @@
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#mainNav"
-    >
+      aria-controls="mainNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-between " id="mainNav">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3 text-color ">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2 gap-lg-4 text-center text-lg-start text-color ">
         <li class="nav-item">
-          <a class="nav-link text-color " href="{% url 'home' %}">Home</a>
+          <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'home' %}">Home</a>
         </li>
         
         
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link text-color" href="{% url 'user_orders' %}">My Orders</a>
+          <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'user_orders' %}">My Orders</a>
         </li>
           {% if user.is_superuser and user.user_role == 'admin' %}
         <li class="nav-item">
-          <a class="nav-link text-color" href="{% url 'users' %}">Admin Pannel</a>
+          <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'users' %}">Admin Pannel</a>
         </li>
           {% elif user.user_role == 'seller' %}
           <li class="nav-item">
-            <a class="nav-link text-color" href="{% url 'dashboard' %}">Seller Pannel</a>
+            <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'dashboard' %}">Seller Pannel</a>
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link text-color" href="{% url 'logout' %}">Logout</a>
+            <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'logout' %}">Logout</a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link text-color" href="{% url 'login' %}">Login</a>
+            <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-color" href="{% url 'register' %}">Sign Up</a>
+            <a class="nav-link px-2 px-lg-3 text-color" href="{% url 'register' %}">Sign Up</a>
           </li>
           
         {% endif %}
       </ul>
 
       <form
-        class="d-flex align-items-center gap-3"
-        style="width: 25%"
+        class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 gap-lg-3 ms-lg-3"
         method="get"
         action="{% url 'product_list' %}"
       >
-        <div class="input-group " style="flex: 1">
+        <div class="input-group w-100 w-lg-auto" style="flex: 1">
           <input
             type="search"
             class="form-control "
@@ -105,7 +107,7 @@
           </button>
         </div>
 
-        <a href="{% url 'wishlist' %}" class="position-relative text-dark">
+        <a href="{% url 'wishlist' %}" class="position-relative px-1 px-lg-2">
           <i class="bi bi-heart fs-5 position-relative text-color"></i>
 
           {% if request.user.is_authenticated and request.user.wishlist_products.exists %}
@@ -126,12 +128,12 @@
           {% endif %}
         </a>
 
-        <a href="{% url 'shopping_cart' %}" class="text-dark">
+        <a href="{% url 'shopping_cart' %}" class="px-1 px-lg-2">
           <i class="bi bi-cart fs-5 text-color"></i>
         </a>
 
         {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="text-dark">
+          <a href="{% url 'profile' %}" class="px-1 px-lg-2">
             <i class="bi bi-person-circle fs-5 text-color"></i>
           </a>
         {% endif %}

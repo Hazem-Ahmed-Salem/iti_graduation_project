@@ -15,11 +15,11 @@
 
     
     <div class="col-md-6">
-      <div class="bg-light d-flex justify-content-center align-items-center" style="height: 400px;">
+      <div class="bg-light ratio ratio-1x1">
         <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}"
              alt="{{ product.name }}"
-             class="img-fluid"
-             style="max-height: 380px; object-fit: contain;" />
+             class="w-100 h-100"
+             style="object-fit: contain; padding: 0.75rem;" />
       </div>
     </div>
 
@@ -38,7 +38,7 @@
        <div class="d-flex align-items-center gap-2 mb-3">
   <form method="" action="" class="d-flex align-items-center gap-2">
     {% csrf_token %}
-       <div class="input-group" style="width: 140px;">
+        <div class="input-group" style="max-width: 160px;">
           <button type="button" class="my-btn" onclick="this.nextElementSibling.stepDown()">-</button>
           <input id="quantity" type="number" name="quantity" value="1" min="1" class="form-control text-center">
           <button type="button" class="my-btn" onclick="this.previousElementSibling.stepUp()">+</button>

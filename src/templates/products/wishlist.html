@@ -7,13 +7,13 @@
   <h2 class="mb-4">My Wishlist</h2>
 
   {% if products %}
-    <div class="row">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3 g-md-4">
       {% for product in products %}
-        <div class="col-md-3 mb-4">
+        <div class="col">
           <div class="card border-0 shadow-sm h-100">
             
-            <div class="bg-light d-flex justify-content-center align-items-center" style="height: 220px;">
-              <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}" style="max-height: 200px; object-fit: contain;">
+            <div class="bg-light ratio ratio-4x3">
+              <img src="{% if product.URL_image %} {{ product.URL_image }} {% else %} {{product.image.url}} {% endif %}" alt="{{ product.name }}" class="w-100 h-100" style="object-fit: contain; padding: 0.5rem;">
             </div>
 
             <div class="card-body text-center">
